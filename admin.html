@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Site Admin — Reza Goharimehr</title>
+<style>
+  :root{ --bg:#0a0e14; --panel:#121926; --panel2:#0f1520; --border:rgba(255,255,255,0.10);
+    --text:#e6edf3; --dim:#8b98a9; --accent:#ff6a3d; --accent2:#38bdf8; --ok:#31c48d; --err:#f87171; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif; line-height:1.5; }
+  header{ position:sticky; top:0; z-index:10; background:rgba(10,14,20,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border); padding:14px 22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  header h1{ font-size:1.05rem; margin:0; }
+  header .sp{ flex:1; }
+  main{ max-width:900px; margin:0 auto; padding:24px 22px 120px; }
+  .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  input, textarea, select{ width:100%; background:var(--panel2); color:var(--text);
+    border:1px solid var(--border); border-radius:8px; padding:9px 11px; font:inherit; font-size:0.9rem; }
+  textarea{ resize:vertical; min-height:64px; line-height:1.45; }
+  label{ display:block; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--dim); margin:0 0 5px; }
+  .field{ margin:12px 0; }
+  button{ background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:8px;
+    padding:9px 15px; font:inherit; font-size:0.85rem; cursor:pointer; transition:.15s; }
+  button:hover{ border-color:var(--accent2); }
+  button.primary{ background:var(--accent); color:#0a0e14; border-color:var(--accent); font-weight:600; }
+  button.primary:hover{ box-shadow:0 0 18px rgba(255,106,61,0.4); }
+  button.mini{ padding:4px 9px; font-size:0.75rem; }
+  button.danger{ color:var(--err); }
+  fieldset{ border:1px solid var(--border); border-radius:12px; margin:16px 0; padding:14px 16px; background:var(--panel); }
+  legend{ padding:0 8px; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:var(--accent2); font-weight:700; }
+  .arr-item{ border:1px dashed var(--border); border-radius:10px; padding:12px 14px; margin:10px 0; background:var(--panel2); position:relative; }
+  .arr-item .arr-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .arr-item .arr-head span{ font-size:0.72rem; color:var(--dim); text-transform:uppercase; letter-spacing:0.6px; }
+  .string-item{ display:flex; gap:8px; align-items:center; margin:6px 0; }
+  .string-item input{ flex:1; }
+  .banner{ padding:10px 14px; border-radius:8px; font-size:0.85rem; margin:10px 0; display:none; }
+  .banner.show{ display:block; }
+  .banner.ok{ background:rgba(49,196,141,0.15); border:1px solid var(--ok); color:#a7f3d0; }
+  .banner.err{ background:rgba(248,113,113,0.12); border:1px solid var(--err); color:#fecaca; }
+  .banner.info{ background:rgba(56,189,248,0.12); border:1px solid var(--accent2); color:#bae6fd; }
+  .muted{ color:var(--dim); font-size:0.82rem; }
+  .footerbar{ position:fixed; bottom:0; left:0; right:0; background:rgba(10,14,20,0.95); backdrop-filter:blur(8px);
+    border-top:1px solid var(--border); padding:12px 22px; display:flex; gap:12px; align-items:center; z-index:10; }
+  .footerbar .sp{ flex:1; }
+  a{ color:var(--accent2); }
+  code{ background:var(--panel2); padding:2px 6px; border-radius:5px; font-size:0.85em; }
+  details{ margin:14px 0; } summary{ cursor:pointer; color:var(--dim); font-size:0.85rem; }
+  #raw{ width:100%; min-height:340px; font-family:Consolas,monospace; font-size:0.8rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚙️ Site Admin</h1>
+  <span class="muted" id="repoLabel"></span>
+  <span class="sp"></span>
+  <button id="reloadBtn">↻ Reload from GitHub</button>
+  <a href="index.html" target="_blank"><button>↗ View site</button></a>
+</header>
+
+<main>
+  <!-- Auth -->
+  <fieldset>
+    <legend>GitHub access</legend>
+    <p class="muted">Paste a <b>fine-grained personal access token</b> with <b>Contents: Read &amp; write</b> on the
+      <code>RGoharimehr.github.io</code> repo. It is stored only in this browser (localStorage) and never committed.
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create a token →</a></p>
+    <div class="field">
+      <label>Personal access token</label>
+      <div class="row">
+        <input type="password" id="token" placeholder="github_pat_..." style="flex:1; min-width:240px;">
+        <button id="saveTokenBtn">Save token</button>
+        <button id="clearTokenBtn">Clear</button>
+      </div>
+    </div>
+    <div id="authBanner" class="banner"></div>
+  </fieldset>
+
+  <div id="editorArea" style="display:none;">
+    <div class="banner info show">Edit any field below, then <b>Save &amp; Publish</b> at the bottom. Changes commit to GitHub and the live site rebuilds in ~1–2 minutes.</div>
+
+    <!-- Image uploader -->
+    <fieldset>
+      <legend>Upload a photo</legend>
+      <p class="muted">Uploads to <code>images/events/</code>. After upload, copy the path into an event photo's <code>src</code> field.</p>
+      <div class="row">
+        <input type="file" id="imgFile" accept="image/*" style="flex:1; min-width:200px;">
+        <button id="uploadBtn">Upload to repo</button>
+      </div>
+      <div id="uploadBanner" class="banner"></div>
+    </fieldset>
+
+    <!-- Structured editor -->
+    <div id="editor"></div>
+
+    <!-- Raw JSON fallback -->
+    <details>
+      <summary>Advanced: edit raw JSON</summary>
+      <p class="muted">For anything the forms don't cover (e.g. HTML in publication authors). Editing here overrides the forms on Save.</p>
+      <textarea id="raw" spellcheck="false"></textarea>
+      <button id="applyRawBtn" class="mini">Apply raw JSON to forms</button>
+    </details>
+  </div>
+</main>
+
+<div class="footerbar" id="footerbar" style="display:none;">
+  <span class="muted" id="dirtyLabel">No unsaved changes</span>
+  <span class="sp"></span>
+  <input id="commitMsg" placeholder="commit message (optional)" style="max-width:280px;">
+  <button class="primary" id="saveBtn">💾 Save &amp; Publish</button>
+</div>
+
+<div class="footerbar" id="saveBanner2" style="display:none; bottom:56px; background:transparent; border:none;">
+  <div id="saveBanner" class="banner" style="width:100%;"></div>
+</div>
+
+<script>
+(function(){
+  var OWNER="RGoharimehr", REPO="RGoharimehr.github.io", BRANCH="main", FILE="content.json";
+  var API="https://api.github.com/repos/"+OWNER+"/"+REPO;
+  var token = localStorage.getItem("gh_admin_token") || "";
+  var content=null, sha=null, dirty=false;
+
+  var $=function(id){return document.getElementById(id);};
+  $("repoLabel").textContent = OWNER+"/"+REPO;
+  if(token) $("token").value = token;
+
+  function banner(id, msg, kind){ var b=$(id); b.textContent=msg; b.className="banner show "+(kind||"info"); }
+  function hide(id){ $(id).className="banner"; }
+  function markDirty(){ dirty=true; $("dirtyLabel").textContent="● Unsaved changes"; $("dirtyLabel").style.color="var(--accent)"; }
+  function markClean(){ dirty=false; $("dirtyLabel").textContent="No unsaved changes"; $("dirtyLabel").style.color="var(--dim)"; }
+
+  // UTF-8 safe base64
+  function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
+  function b64decodeUtf8(b64){ return decodeURIComponent(escape(atob(b64.replace(/\n/g,"")))); }
+
+  function ghHeaders(){ return { "Authorization":"Bearer "+token, "Accept":"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28" }; }
+
+  function loadContent(){
+    if(!token){ banner("authBanner","Enter and save a token first.","err"); return; }
+    banner("authBanner","Loading content.json from GitHub…","info");
+    fetch(API+"/contents/"+FILE+"?ref="+BRANCH, { headers:ghHeaders(), cache:"no-store" })
+      .then(function(r){ if(r.status===401) throw new Error("Bad token (401). Check the token and its permissions.");
+        if(r.status===404) throw new Error("content.json not found in the repo."); if(!r.ok) throw new Error("GitHub error "+r.status); return r.json(); })
+      .then(function(d){ sha=d.sha; content=JSON.parse(b64decodeUtf8(d.content));
+        banner("authBanner","✓ Connected as authorized user. Content loaded.","ok");
+        $("editorArea").style.display="block"; $("footerbar").style.display="flex"; $("saveBanner2").style.display="block";
+        buildEditor(); $("raw").value=JSON.stringify(content,null,2); markClean(); })
+      .catch(function(e){ banner("authBanner", e.message, "err"); });
+  }
+
+  // ---------- Recursive form builder ----------
+  function labelText(k){ return k.replace(/([A-Z])/g," $1").replace(/^./,function(c){return c.toUpperCase();}); }
+
+  function buildEditor(){
+    var root=$("editor"); root.innerHTML="";
+    Object.keys(content).forEach(function(key){
+      var fs=document.createElement("fieldset");
+      var lg=document.createElement("legend"); lg.textContent=labelText(key); fs.appendChild(lg);
+      buildValue(fs, content, key);
+      root.appendChild(fs);
+    });
+  }
+
+  function buildValue(container, parent, key){
+    var val=parent[key];
+    if(typeof val==="string" || typeof val==="number"){
+      var f=div("field"); f.appendChild(lbl(labelText(key)));
+      var multiline = String(val).length>70 || /<|\n/.test(String(val));
+      var inp = document.createElement(multiline?"textarea":"input");
+      inp.value=val; inp.addEventListener("input",function(){ parent[key]=inp.value; markDirty(); syncRaw(); });
+      f.appendChild(inp); container.appendChild(f);
+    } else if(Array.isArray(val)){
+      var f2=div("field"); f2.appendChild(lbl(labelText(key)+"  ("+val.length+")"));
+      var listWrap=div("arr-list");
+      val.forEach(function(item,i){ buildArrayItem(listWrap, val, i, key); });
+      var add=btn("+ Add "+singular(key),"mini");
+      add.onclick=function(){ val.push(template(val)); markDirty(); buildEditor(); syncRaw(); };
+      f2.appendChild(listWrap); f2.appendChild(add); container.appendChild(f2);
+    } else if(val && typeof val==="object"){
+      var sub=document.createElement("fieldset");
+      var lg=document.createElement("legend"); lg.textContent=labelText(key); sub.appendChild(lg);
+      Object.keys(val).forEach(function(k2){ buildValue(sub, val, k2); });
+      container.appendChild(sub);
+    }
+  }
+
+  function buildArrayItem(listWrap, arr, i, key){
+    var item=arr[i];
+    if(typeof item==="string"){
+      var row=div("string-item");
+      var inp=document.createElement("input"); inp.value=item;
+      inp.addEventListener("input",function(){ arr[i]=inp.value; markDirty(); syncRaw(); });
+      var rm=btn("✕","mini danger"); rm.onclick=function(){ arr.splice(i,1); markDirty(); buildEditor(); syncRaw(); };
+      row.appendChild(inp); row.appendChild(rm); listWrap.appendChild(row);
+    } else {
+      var box=div("arr-item");
+      var head=div("arr-head"); var t=document.createElement("span"); t.textContent=(item.title||item.label||item.name||labelText(key))+" #"+(i+1);
+      var rm2=btn("Remove","mini danger"); rm2.onclick=function(){ arr.splice(i,1); markDirty(); buildEditor(); syncRaw(); };
+      head.appendChild(t); head.appendChild(rm2); box.appendChild(head);
+      Object.keys(item).forEach(function(k2){ buildValue(box, item, k2); });
+      listWrap.appendChild(box);
+    }
+  }
+
+  function template(arr){
+    if(arr.length && typeof arr[0]==="object"){ return blankClone(arr[0]); }
+    if(arr.length && typeof arr[0]==="string"){ return ""; }
+    return "";
+  }
+  function blankClone(o){
+    if(Array.isArray(o)) return [];
+    if(o && typeof o==="object"){ var r={}; Object.keys(o).forEach(function(k){ r[k]=blankClone(o[k]); }); return r; }
+    if(typeof o==="string") return "";
+    return o;
+  }
+  function singular(k){ return k.replace(/s$/,"").replace(/ie$/,"y"); }
+
+  function div(c){ var d=document.createElement("div"); if(c)d.className=c; return d; }
+  function lbl(t){ var l=document.createElement("label"); l.textContent=t; return l; }
+  function btn(t,c){ var b=document.createElement("button"); b.textContent=t; if(c)b.className=c; return b; }
+  function syncRaw(){ try{ $("raw").value=JSON.stringify(content,null,2); }catch(e){} }
+
+  // ---------- Save ----------
+  function save(){
+    if(!content){ return; }
+    banner("saveBanner","Committing to GitHub…","info");
+    var body={ message: ($("commitMsg").value.trim()||"Update content via admin"),
+      content: b64encode(JSON.stringify(content,null,2)+"\n"), sha: sha, branch: BRANCH };
+    fetch(API+"/contents/"+FILE, { method:"PUT", headers:ghHeaders(), body:JSON.stringify(body) })
+      .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, status:r.status, d:d}; }); })
+      .then(function(res){ if(!res.ok) throw new Error((res.d&&res.d.message)||("GitHub error "+res.status));
+        sha=res.d.content.sha; markClean();
+        banner("saveBanner","✓ Saved & pushed. Live site will rebuild in ~1–2 min at https://rgoharimehr.github.io/","ok");
+        $("commitMsg").value=""; })
+      .catch(function(e){ banner("saveBanner","Save failed: "+e.message,"err"); });
+  }
+
+  // ---------- Image upload ----------
+  function uploadImage(){
+    var file=$("imgFile").files[0];
+    if(!file){ banner("uploadBanner","Choose an image first.","err"); return; }
+    if(!token){ banner("uploadBanner","Save a token first.","err"); return; }
+    var path="images/events/"+file.name.replace(/[^\w.\-]/g,"_");
+    banner("uploadBanner","Uploading "+path+" …","info");
+    var reader=new FileReader();
+    reader.onload=function(){
+      var b64=reader.result.split(",")[1];
+      // check if it already exists to get sha
+      fetch(API+"/contents/"+path+"?ref="+BRANCH,{headers:ghHeaders()}).then(function(r){ return r.ok?r.json():null; })
+        .then(function(existing){
+          var body={ message:"Upload "+path, content:b64, branch:BRANCH };
+          if(existing&&existing.sha) body.sha=existing.sha;
+          return fetch(API+"/contents/"+path,{method:"PUT",headers:ghHeaders(),body:JSON.stringify(body)});
+        })
+        .then(function(r){ return r.json().then(function(d){return {ok:r.ok,d:d};}); })
+        .then(function(res){ if(!res.ok) throw new Error((res.d&&res.d.message)||"upload failed");
+          banner("uploadBanner","✓ Uploaded. Use this path as a photo src:  "+path,"ok"); })
+        .catch(function(e){ banner("uploadBanner","Upload failed: "+e.message,"err"); });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ---------- Events ----------
+  $("saveTokenBtn").onclick=function(){ token=$("token").value.trim(); localStorage.setItem("gh_admin_token",token); loadContent(); };
+  $("clearTokenBtn").onclick=function(){ token=""; localStorage.removeItem("gh_admin_token"); $("token").value=""; banner("authBanner","Token cleared.","info"); };
+  $("reloadBtn").onclick=loadContent;
+  $("saveBtn").onclick=save;
+  $("uploadBtn").onclick=uploadImage;
+  $("applyRawBtn").onclick=function(){ try{ content=JSON.parse($("raw").value); markDirty(); buildEditor(); banner("saveBanner","Raw JSON applied to forms (not yet saved).","info"); }catch(e){ banner("saveBanner","Invalid JSON: "+e.message,"err"); } };
+  window.addEventListener("beforeunload",function(e){ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+  if(token) loadContent();
+})();
+</script>
+</body>
+</html>

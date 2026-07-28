@@ -372,16 +372,19 @@
   }
   .about-grid p{ color: var(--text-dim); margin-bottom:16px; }
 
-  /* About — full-bleed digital-twin video background */
+  /* About — contained digital-twin video band */
   #about.about-video{
-    max-width:none;
-    width:100%;
+    max-width: var(--max-w);
+    margin: 40px auto;
     padding:0;
+    border:1px solid var(--border);
+    border-top:1px solid var(--border);
+    border-radius:18px;
     position:relative;
     overflow:hidden;
     display:flex;
     align-items:center;
-    min-height:600px;
+    min-height:480px;
   }
   .about-video-bg{
     position:absolute;
@@ -389,7 +392,7 @@
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position: right center;
+    object-position: center center;
     z-index:0;
   }
   .about-video-overlay{
@@ -407,7 +410,7 @@
     z-index:2;
     max-width: var(--max-w);
     margin:0 auto;
-    padding:110px 24px;
+    padding:72px 44px;
     width:100%;
   }
   .about-copy{ max-width:560px; }
@@ -675,6 +678,14 @@
     border-radius:999px;
     border:1px solid var(--border);
     color: var(--text-dim);
+  }
+  .skills-label{
+    font-size:0.95rem;
+    margin-bottom:12px;
+    color: var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-weight:600;
   }
 
   /* Tools */
@@ -1287,135 +1298,7 @@
   </figure>
 </div>
 
-<script>
-(function(){
-  /* ============================================================
-     EVENT PHOTOS — to publish a photo:
-       1) drop the file into  personal-website/images/events/
-       2) add one line to that event's `photos` array below:
-          { src: "images/events/FILENAME.jpg", caption: "Your caption here" }
-     ============================================================ */
-  var EVENTS = [
-    {
-      role: "Exhibitor · Speaker · Short Course",
-      title: "SEMI-THERM 42 — San Jose, CA",
-      meta: "Mar 2026 · Exhibited at the Villanova Engineering booth, presented the FNM paper, and contributed to the Digital Twin short course module.",
-      photos: [
-        // { src: "images/events/semitherm-podium.jpg", caption: "Presenting the FNM paper on stage" },
-        // { src: "images/events/semitherm-booth.jpg", caption: "The Villanova Engineering booth" },
-      ]
-    },
-    {
-      role: "Exhibitor",
-      title: "CES 2026 — U.S. DOE ARPA-E Booth",
-      meta: "Jan 2026 · Represented OMNICOOL alongside NVIDIA, Vertiv, Boyd, Binghamton, and Villanova.",
-      photos: [
-        // { src: "images/events/ces-booth.jpg", caption: "At the ARPA-E booth with the OMNICOOL POD" },
-      ]
-    },
-    {
-      role: "Exhibitor",
-      title: "SC25 — Supercomputing 2025",
-      meta: "Nov 2025 · Exhibited the OMNICOOL Digital Twin and end-to-end transient two-phase simulation.",
-      photos: [
-        // { src: "images/events/sc25-team.jpg", caption: "OMNICOOL team at SC25" },
-      ]
-    },
-    {
-      role: "Exhibitor",
-      title: "ARPA-E Energy Innovation Summit",
-      meta: "2026 · Live 250 kW two-phase cooling POD demonstration with a scaling path to 1 MW+.",
-      photos: [
-        // { src: "images/events/arpae-pod.jpg", caption: "The live 250 kW cooling POD" },
-      ]
-    }
-  ];
-
-  var flat = [];
-
-  function render(){
-    var list = document.getElementById('events-list');
-    if(!list) return;
-    EVENTS.forEach(function(ev){
-      var block = document.createElement('div');
-      block.className = 'event-block';
-
-      var role = document.createElement('span');
-      role.className = 'event-role';
-      role.textContent = ev.role;
-      block.appendChild(role);
-
-      var h = document.createElement('h4');
-      h.textContent = ev.title;
-      block.appendChild(h);
-
-      var m = document.createElement('p');
-      m.className = 'event-meta';
-      m.textContent = ev.meta;
-      block.appendChild(m);
-
-      if(ev.photos && ev.photos.length){
-        var g = document.createElement('div');
-        g.className = 'event-gallery';
-        ev.photos.forEach(function(ph){
-          var idx = flat.length;
-          flat.push(ph);
-          var fig = document.createElement('figure');
-          fig.className = 'event-shot';
-          var img = document.createElement('img');
-          img.src = ph.src; img.alt = ph.caption || ev.title; img.loading = 'lazy';
-          fig.appendChild(img);
-          if(ph.caption){
-            var cap = document.createElement('figcaption');
-            cap.textContent = ph.caption;
-            fig.appendChild(cap);
-          }
-          fig.addEventListener('click', function(){ openLightbox(idx); });
-          g.appendChild(fig);
-        });
-        block.appendChild(g);
-      } else {
-        var empty = document.createElement('div');
-        empty.className = 'event-empty';
-        var e1 = document.createElement('span'); e1.textContent = '📷';
-        var e2 = document.createElement('span'); e2.textContent = 'Photos coming soon';
-        empty.appendChild(e1); empty.appendChild(e2);
-        block.appendChild(empty);
-      }
-      list.appendChild(block);
-    });
-  }
-
-  var lb, lbImg, lbCap, lbCount, curr = 0;
-  function openLightbox(i){ curr = i; update(); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function closeLightbox(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
-  function step(d){ if(!flat.length) return; curr = (curr + d + flat.length) % flat.length; update(); }
-  function update(){
-    var ph = flat[curr];
-    lbImg.src = ph.src; lbImg.alt = ph.caption || '';
-    lbCap.textContent = ph.caption || '';
-    lbCount.textContent = (curr + 1) + ' / ' + flat.length;
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    render();
-    lb = document.getElementById('lightbox');
-    lbImg = lb.querySelector('img');
-    lbCap = lb.querySelector('figcaption');
-    lbCount = lb.querySelector('.lb-count');
-    lb.querySelector('.lb-close').addEventListener('click', closeLightbox);
-    lb.querySelector('.lb-prev').addEventListener('click', function(e){ e.stopPropagation(); step(-1); });
-    lb.querySelector('.lb-next').addEventListener('click', function(e){ e.stopPropagation(); step(1); });
-    lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
-    document.addEventListener('keydown', function(e){
-      if(!lb.classList.contains('open')) return;
-      if(e.key === 'Escape') closeLightbox();
-      else if(e.key === 'ArrowLeft') step(-1);
-      else if(e.key === 'ArrowRight') step(1);
-    });
-  });
-})();
-</script>
+<script src="content.js"></script>
 
 <script>
 /* Navigation, scroll-spy and scroll-reveal — registered last so event blocks already exist */

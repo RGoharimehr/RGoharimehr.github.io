@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "eyebrow": "Villanova University · Laboratory for Advanced Thermal and Fluid Systems",
+    "name": "Reza Goharimehr",
+    "titleAccent": "Thermal Scientist & Engineer",
+    "lead": "I develop Flow Network Models and Digital Twins for large-scale data center liquid cooling systems — working with NVIDIA, Vertiv, and Villanova University on the ARPA-E OMNICOOL project to model single- and two-phase direct-to-chip cooling for high-power GPU racks.",
+    "primaryBtnText": "View my work",
+    "primaryBtnHref": "#projects",
+    "cvBtnText": "Download CV",
+    "cvBtnHref": "Reza-Goharimehr-CV.pdf",
+    "photo": "images/reza-goharimehr.png",
+    "photoCaption": "Villanova University · Mechanical Engineering"
+  },
+  "about": {
+    "tag": "Who I am",
+    "title": "About Me",
+    "paragraphs": [
+      "I'm a graduate researcher in the Department of Mechanical Engineering at Villanova University, working under Dr. Alfonso Ortega in the Laboratory for Advanced Thermal and Fluid Systems. My research focuses on Flow Network Modeling (FNM) and Digital Twin development for large-scale, high-power data center cooling systems.",
+      "I lead the development of a two-phase component library (cold-plates, quick disconnects, flow regulators, heat exchangers) in the Flownex Simulation Environment, and integrate these models into an interactive Digital Twin built on NVIDIA Omniverse — connecting physics-based simulation, live telemetry, and even XR control via Apple Vision Pro."
+    ],
+    "badge": "OMNICOOL Digital Twin · live simulation"
+  },
+  "research": {
+    "tag": "Focus areas",
+    "title": "Research Interests",
+    "cards": [
+      { "icon": "🔥", "title": "Heat & Mass Transfer", "text": "Conduction, convection, and radiation modeling in complex geometries and multiphase systems." },
+      { "icon": "🌀", "title": "Computational Fluid Dynamics", "text": "High-fidelity CFD simulation, mesh convergence studies, and parametric design-of-experiments." },
+      { "icon": "⚙️", "title": "Thermal-Fluid Systems", "text": "System-level thermal management for energy, propulsion, and electronics applications." },
+      { "icon": "📊", "title": "Data-Driven Modeling", "text": "Reduced-order and surrogate models built from simulation matrices to accelerate design cycles." },
+      { "icon": "🧪", "title": "Experimental Validation", "text": "Bench and lab-scale testing to validate and calibrate computational thermal models." },
+      { "icon": "🛠️", "title": "Design Optimization", "text": "Coupling simulation with optimization workflows to improve thermal efficiency and reliability." }
+    ]
+  },
+  "skills": {
+    "tag": "Toolbox",
+    "title": "Skills & Software",
+    "groups": [
+      { "label": "Simulation & Analysis", "items": ["Ansys Fluent (Expert)", "Ansys CFX (Expert)", "Ansys Workbench (Expert)", "Flownex SE", "NVIDIA Omniverse", "Tecplot", "ParaView", "nTop"] },
+      { "label": "Programming", "items": ["FORTRAN (Expert)", "MATLAB", "Python", "C++", "C#"] }
+    ]
+  },
+  "publications": {
+    "tag": "Selected work",
+    "title": "Publications & Reports",
+    "scholarUrl": "https://scholar.google.com/citations?user=eXuwz8wAAAAJ&hl=en",
+    "items": [
+      { "year": "2026", "title": "Development of a Flow Network Modeling Approach for End-to-End Data Center Direct-to-Chip Two-Phase Cooling Systems", "authors": "A. Heydari, <strong>R. Goharimehr*</strong>, A. Ortega, M. Mehrabikermani, Y. Manaserh, V. Britz, M. Venter — 42nd Semiconductor Thermal Measurement, Modeling & Management Symposium (SEMI-THERM), San Jose, CA. (*Corresponding author)" },
+      { "year": "2024", "title": "Studying a droplet impaction on a vibrating porous medium", "authors": "E. Ezzatneshan, R. Sadraei, <strong>R. Goharimehr</strong> — Engineering Applications of Computational Fluid Mechanics, 18(1), 2410360." },
+      { "year": "2023", "title": "Seeing new depths: visualizing the three-dimensional flow field of a free-swimming alga", "authors": "G. Pradipta, V. Tran, <strong>R. Goharimehr</strong>, J. Hong, X. Yong, X. Cheng — Bulletin of the American Physical Society (APS)." },
+      { "year": "2021", "title": "Study of fingering dynamics of two immiscible fluids in a homogeneous porous medium with considering wettability effects using a pore-scale multicomponent lattice Boltzmann model", "authors": "E. Ezzatneshan, <strong>R. Goharimehr</strong> — European Journal of Computational Mechanics, 30(4–6)." },
+      { "year": "2021", "title": "A pseudopotential lattice Boltzmann method for simulation of two-phase flow transport in porous medium at high-density and high-viscosity ratios", "authors": "E. Ezzatneshan, <strong>R. Goharimehr</strong> — Geofluids, 2021(1), 5668743." },
+      { "year": "2020", "title": "Study of spontaneous mobility and imbibition of a liquid droplet in contact with fibrous porous media considering wettability effects", "authors": "E. Ezzatneshan, <strong>R. Goharimehr</strong> — Physics of Fluids, 32(11)." },
+      { "year": "2020", "title": "Effect of multiphase lattice Boltzmann collision models with single- and multi-relaxation times for simulation of liquid-vapor two-phase flows", "authors": "<strong>R. Goharimehr</strong> — Mechanical Engineering Sharif, 363(1), 77–88 (in Persian)." }
+    ]
+  },
+  "experience": {
+    "tag": "Career",
+    "title": "Experience & Education",
+    "jobs": [
+      { "meta": "Jan 2024 — Present", "title": "Ph.D. Researcher, Mechanical Engineering · Villanova University", "text": "Research Assistant in the Laboratory for Advanced Thermal and Fluid Systems, advised by Dr. Alfonso Ortega. Leading development of Digital Twins of large-scale data center liquid cooling systems (ES2 Project 5.1) and Flow Network Models for the ARPA-E OMNICOOL project with NVIDIA and Vertiv, in collaboration with Dr. Bahgat Sammakia (Binghamton University)." },
+      { "meta": "Aug 2022 — Dec 2023", "title": "Ph.D. Student & Teaching/Research Assistant · Binghamton University, SUNY", "text": "Thomas J. Watson College of Engineering and Applied Science, Department of Mechanical Engineering. Began doctoral studies before transferring to Villanova University to continue Ph.D. research under Dr. Alfonso Ortega." },
+      { "meta": "Jun 2018 — Aug 2022", "title": "Research Assistant · Multiphase Flow Laboratory, Shahid Beheshti University", "text": "Tehran, Iran, under the supervision of Dr. E. Ezzatneshan. Mentored undergraduate students through the research process on multiphase and multicomponent lattice Boltzmann simulation." },
+      { "meta": "Sep 2017 — Jun 2018", "title": "Teaching Assistant · Shahid Beheshti University", "text": "New Technologies Engineering Department. Taught the graduate course \"Advanced Numerical Computation Methods\" (~25 students/semester), including FORTRAN, Tecplot, and MATLAB instruction; designed lesson plans and course materials." }
+    ],
+    "education": [
+      { "meta": "Sep 2016 — Sep 2019", "title": "M.S., Mechanical Engineering · Shahid Beheshti University (SBU)", "text": "Tehran, Iran. GPA 16.12/20 (highest rank in class). Dissertation: \"Numerical Simulation of Multicomponent Multiphase Flow Transport through a Porous Media Using the Lattice Boltzmann Method,\" advised by Dr. E. Ezzatneshan." },
+      { "meta": "Sep 2011 — Nov 2015", "title": "B.S., Mechanical Engineering · Islamic Azad University (IAUN)", "text": "Najafabad, Isfahan, Iran. GPA 15.59/20. Final project: simulation of fluid flow around a circular obstacle at various Reynolds numbers using Ansys CFX." }
+    ]
+  },
+  "projects": {
+    "tag": "Selected work",
+    "title": "Projects",
+    "items": [
+      { "title": "OMNICOOL — Two-Phase Cooling POD (ARPA-E)", "text": "A 250 kW self-contained, containerized POD with a clear scaling path to 1 MW+, demonstrated live at the ARPA-E Energy Innovation Summit. End-to-end two-phase pumped refrigeration (R515B heat rejection / R1234yf at the chip) achieves ~0.005°C/W package thermal resistance, PUE below 1.05, and zero water consumption at ≥40°C ambient. Built with Vertiv, Boyd (Eaton), Binghamton University, and Villanova University, integrated with a physics-based NVIDIA Omniverse Digital Twin.", "tags": ["ARPA-E", "Two-Phase Refrigeration", "NVIDIA Omniverse", "Digital Twin"] },
+      { "title": "Two-Phase Data Center Component Library", "text": "Cold-plates, quick disconnects, flow regulators, and two-phase heat exchangers developed in the Flownex Simulation Environment and validated against experimental test data (e.g. Kandlikar two-phase cold-plate model).", "tags": ["Flownex", "Two-Phase Cooling", "Validation"] },
+      { "title": "Single-Phase vs. Two-Phase Cooling Comparison", "text": "Transient simulation of identical server racks under a 40%→100% heat-load spike; the two-phase system showed a 30% lower chip case-temperature rise (29.5°C vs. 42.1°C) due to latent-heat cooling.", "tags": ["Transient Simulation", "System Comparison"] },
+      { "title": "XR Remote Control Interface (Apple Vision Pro)", "text": "Immersive control panel for the Digital Twin — IT load, ambient temperature, fan speed, and altitude set directly in XR and streamed to the Omniverse simulation via a structured command/telemetry layer.", "tags": ["XR / visionOS", "Remote Control"] }
+    ]
+  },
+  "events": {
+    "tag": "On the road",
+    "title": "Conferences & Exhibitions",
+    "items": [
+      { "role": "Exhibitor · Speaker · Short Course", "title": "SEMI-THERM 42 — San Jose, CA", "meta": "Mar 2026 · Exhibited at the Villanova Engineering booth, presented the FNM paper, and contributed to the Digital Twin short course module.", "photos": [] },
+      { "role": "Exhibitor", "title": "CES 2026 — U.S. DOE ARPA-E Booth", "meta": "Jan 2026 · Represented OMNICOOL alongside NVIDIA, Vertiv, Boyd, Binghamton, and Villanova.", "photos": [] },
+      { "role": "Exhibitor", "title": "SC25 — Supercomputing 2025", "meta": "Nov 2025 · Exhibited the OMNICOOL Digital Twin and end-to-end transient two-phase simulation.", "photos": [] },
+      { "role": "Exhibitor", "title": "ARPA-E Energy Innovation Summit", "meta": "2026 · Live 250 kW two-phase cooling POD demonstration with a scaling path to 1 MW+.", "photos": [] }
+    ]
+  },
+  "videos": {
+    "tag": "Watch",
+    "title": "Simulation & Demo Videos",
+    "items": [
+      { "src": "videos/omnicool.mp4", "title": "OMNICOOL Digital Twin Demo", "desc": "Walkthrough of the NVIDIA Omniverse Digital Twin for the OMNICOOL two-phase data center cooling system — coupling Flow Network Modeling with CFD, live telemetry, and interactive control." }
+    ]
+  },
+  "tools": {
+    "tag": "Build",
+    "title": "Calculators & Tools",
+    "items": [
+      { "icon": "🌡️", "title": "Heat Transfer Calculator", "desc": "Quick conduction/convection Q calculations from geometry and material inputs.", "status": "Coming soon", "href": "tools/heat-transfer-calculator.html" },
+      { "icon": "🌀", "title": "Reynolds Number Tool", "desc": "Determine flow regime from velocity, characteristic length, and fluid properties.", "status": "Coming soon", "href": "tools/reynolds-calculator.html" },
+      { "icon": "🔁", "title": "Engineering Unit Converter", "desc": "Convert between SI and imperial units for thermal and fluid quantities.", "status": "Coming soon", "href": "tools/unit-converter.html" }
+    ]
+  },
+  "contact": {
+    "title": "Let's work together",
+    "text": "Open to research collaboration, consulting, and engineering roles in thermal-fluid sciences.",
+    "email": "rgoharim@villanova.edu",
+    "links": [
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/reza-goharimehr-b7383b258/" },
+      { "label": "Google Scholar", "href": "https://scholar.google.com/citations?user=eXuwz8wAAAAJ&hl=en" },
+      { "label": "ORCID", "href": "https://orcid.org/0000-0002-3584-8728" },
+      { "label": "GitHub", "href": "https://github.com/RGoharimehr/" }
+    ]
+  },
+  "footer": "© 2026 Reza Goharimehr. Built with curiosity for thermal science and engineering."
+}

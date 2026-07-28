@@ -2,13 +2,28 @@
  DEPLOYING TO GITHUB PAGES  ->  https://rgoharimehr.github.io/
 ================================================================
 
-*** DO THIS FIRST — COMPRESS THE VIDEOS ***
-GitHub REJECTS any file larger than 100 MB. Both files in /videos are
-~316 MB, so the upload WILL FAIL until you shrink them. Follow
-README-video.txt to compress:
-  - videos/digital-twin-bg.mp4   (About background loop)
-  - videos/omnicool.mp4          (full demo)
-Get both well under 100 MB (ideally a few MB each) before uploading.
+ALREADY DONE FOR YOU:
+  [x] Videos compressed  (digital-twin-bg.mp4 = 1.9 MB, omnicool.mp4 = 7.5 MB)
+  [x] Whole site folder is now ~11 MB total (well under GitHub limits)
+  [x] Git repository initialized + first commit made (branch: main)
+  [x] Remote set to https://github.com/RGoharimehr/RGoharimehr.github.io.git
+
+YOU ONLY NEED TO:
+  1. On github.com, create a NEW public repo named EXACTLY:
+         RGoharimehr.github.io
+     (do NOT add a README or .gitignore — leave it empty).
+  2. In a terminal, from inside this "personal-website" folder, run:
+         git push -u origin main
+     Sign in with your GitHub account when prompted (a browser window
+     may pop up — that's normal).
+  3. Wait ~1-2 minutes, then open:  https://rgoharimehr.github.io/
+
+  (If GitHub Pages isn't on automatically: repo > Settings > Pages >
+   Source = Deploy from a branch, Branch = main / (root) > Save.)
+
+Prefer a GUI? Open GitHub Desktop > File > Add local repository >
+select this "personal-website" folder > Publish repository
+(name it RGoharimehr.github.io, keep it public).
 
 ----------------------------------------------------------------
 OPTION A — GitHub Desktop (no command line)
