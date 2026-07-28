@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reza Goharimehr — Thermal Scientist &amp; Engineer</title>
+<meta name="description" content="Reza Goharimehr is a graduate researcher at Villanova University developing Flow Network Models and NVIDIA Omniverse Digital Twins for large-scale data center liquid cooling, in collaboration with NVIDIA and Vertiv on the ARPA-E OMNICOOL project.">
+<meta name="keywords" content="Reza Goharimehr, thermal engineer, Villanova University, Flow Network Modeling, Digital Twin, data center cooling, two-phase cooling, direct-to-chip cooling, NVIDIA Omniverse, Flownex, OMNICOOL, ARPA-E">
+<meta name="author" content="Reza Goharimehr">
+<meta name="robots" content="index, follow">
+<!-- TODO: replace with your live domain once hosted -->
+<link rel="canonical" href="https://rgoharimehr.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reza Goharimehr — Thermal Scientist &amp; Engineer">
+<meta property="og:description" content="Flow Network Modeling and Digital Twin research for data center liquid cooling, with NVIDIA, Vertiv, and Villanova University.">
+<meta property="og:url" content="https://rgoharimehr.github.io/">
+<meta property="og:image" content="https://rgoharimehr.github.io/images/reza-goharimehr.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reza Goharimehr — Thermal Scientist &amp; Engineer">
+<meta name="twitter:description" content="Flow Network Modeling and Digital Twin research for data center liquid cooling, with NVIDIA, Vertiv, and Villanova University.">
+<meta name="twitter:image" content="https://rgoharimehr.github.io/images/reza-goharimehr.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Reza Goharimehr",
+  "jobTitle": "Thermal Scientist & Engineer",
+  "affiliation": "Villanova University",
+  "email": "mailto:rgoharim@villanova.edu",
+  "image": "https://rgoharimehr.github.io/images/reza-goharimehr.png",
+  "knowsAbout": ["Flow Network Modeling", "Digital Twin", "Two-Phase Cooling", "Data Center Cooling", "NVIDIA Omniverse", "Heat Transfer", "Thermal-Fluid Systems"],
+  "url": "https://rgoharimehr.github.io/"
+}
+</script>
+<style>
+  :root{
+    --bg: #0a0e14;
+    --bg-alt: #0f1520;
+    --panel: #121926;
+    --border: rgba(255,255,255,0.08);
+    --text: #e6edf3;
+    --text-dim: #8b98a9;
+    --accent: #ff6a3d;
+    --accent-2: #38bdf8;
+    --accent-glow: rgba(255,106,61,0.35);
+    --field-a: rgba(255,106,61,0.12);
+    --field-b: rgba(56,189,248,0.10);
+    --max-w: 1100px;
+    /* D2Q9 lattice-Boltzmann stencil tile: square grid (axial velocities) + X diagonals (diagonal velocities) + lattice nodes */
+    --lattice-tile: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='58'%20height='58'%3E%3Cg%20stroke='%239ec7f0'%20stroke-opacity='0.5'%20stroke-width='1'%20fill='none'%3E%3Cpath%20d='M0%200H58M0%200V58'/%3E%3Cpath%20d='M0%200L58%2058M58%200L0%2058'/%3E%3C/g%3E%3Cg%20fill='%239ec7f0'%3E%3Ccircle%20cx='0'%20cy='0'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='58'%20cy='0'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='0'%20cy='58'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='58'%20cy='58'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='29'%20cy='29'%20r='1.4'%20fill-opacity='0.55'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  html[data-theme="copper"]{
+    --bg: #0b1220;
+    --panel: #121b2e;
+    --text: #e8edf5;
+    --text-dim: #8b96a8;
+    --accent: #c97a4a;
+    --accent-2: #7fa8c9;
+    --accent-glow: rgba(201,122,74,0.35);
+    --field-a: rgba(201,122,74,0.12);
+    --field-b: rgba(127,168,201,0.10);
+  }
+
+  html[data-theme="graphite"]{
+    --bg: #111315;
+    --panel: #191c1f;
+    --text: #e9ebec;
+    --text-dim: #9095a0;
+    --accent: #22d3ee;
+    --accent-2: #94a3b8;
+    --accent-glow: rgba(34,211,238,0.30);
+    --field-a: rgba(34,211,238,0.10);
+    --field-b: rgba(148,163,184,0.08);
+  }
+
+  html[data-theme="amber"]{
+    --bg: #0f172a;
+    --panel: #1a2338;
+    --text: #e6edf5;
+    --text-dim: #94a3b8;
+    --accent: #f5b942;
+    --accent-2: #60a5fa;
+    --accent-glow: rgba(245,185,66,0.35);
+    --field-a: rgba(245,185,66,0.12);
+    --field-b: rgba(96,165,250,0.10);
+  }
+
+  body{ transition: background-color .3s ease, color .3s ease; }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  ::selection{ background: var(--accent-glow); color:#fff; }
+
+  /* Background heat-field effect */
+  .field{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+      radial-gradient(600px circle at 15% 20%, var(--field-a), transparent 60%),
+      radial-gradient(500px circle at 85% 75%, var(--field-b), transparent 60%),
+      var(--bg);
+  }
+
+  /* D2Q9 lattice-Boltzmann stencil background pattern */
+  .field::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: var(--lattice-tile);
+    background-size: 60px 60px;
+    opacity:0.22;
+    mask-image: radial-gradient(ellipse 95% 75% at 50% 25%, black 30%, transparent 95%);
+    -webkit-mask-image: radial-gradient(ellipse 95% 75% at 50% 25%, black 30%, transparent 95%);
+  }
+
+  /* Fine film-grain texture overlay */
+  .field::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:0.04;
+    mix-blend-mode: overlay;
+    pointer-events:none;
+  }
+
+  /* Nav */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter: blur(10px);
+    background: rgba(10,14,20,0.75);
+    border-bottom:1px solid var(--border);
+  }
+
+  nav{
+    max-width: var(--max-w);
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 24px;
+  }
+
+  .logo{
+    font-weight:700;
+    letter-spacing:0.5px;
+    font-size:1.05rem;
+  }
+  .logo span{ color: var(--accent); }
+
+  .nav-links{
+    display:flex;
+    gap:28px;
+    font-size:0.9rem;
+    color: var(--text-dim);
+  }
+  .nav-links a{ transition: color .2s; position:relative; }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-links a.active{ color: var(--accent); }
+  .nav-links a.active::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-6px;
+    height:2px;
+    border-radius:2px;
+    background: var(--accent);
+  }
+
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--border);
+    border-radius:8px;
+    width:40px; height:38px;
+    cursor:pointer;
+    padding:0;
+    align-items:center;
+    justify-content:center;
+    color: var(--text);
+  }
+  .nav-toggle span{
+    display:block;
+    width:18px; height:2px;
+    background: currentColor;
+    position:relative;
+    transition: background .2s;
+  }
+  .nav-toggle span::before, .nav-toggle span::after{
+    content:""; position:absolute; left:0;
+    width:18px; height:2px; background: currentColor;
+    transition: transform .25s ease, top .25s ease;
+  }
+  .nav-toggle span::before{ top:-6px; }
+  .nav-toggle span::after{ top:6px; }
+  .nav-toggle[aria-expanded="true"] span{ background:transparent; }
+  .nav-toggle[aria-expanded="true"] span::before{ top:0; transform: rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span::after{ top:0; transform: rotate(-45deg); }
+
+  /* Scroll-reveal */
+  .reveal{ opacity:0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  :focus-visible{ outline:2px solid var(--accent-2); outline-offset:3px; border-radius:4px; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* Hero */
+  .hero{
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 120px 24px 100px;
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items:center;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color: var(--accent);
+    border:1px solid rgba(255,106,61,0.3);
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:24px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px; height:6px;
+    border-radius:50%;
+    background: var(--accent);
+    box-shadow:0 0 8px var(--accent);
+  }
+
+  .hero h1{
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height:1.1;
+    letter-spacing:-1px;
+    margin-bottom:20px;
+  }
+  .hero h1 .accent{
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero p.lead{
+    color: var(--text-dim);
+    font-size:1.05rem;
+    max-width:520px;
+    margin-bottom:32px;
+  }
+
+  .btn-row{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn{
+    padding:12px 24px;
+    border-radius:8px;
+    font-size:0.9rem;
+    font-weight:600;
+    transition: all .2s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{
+    background: var(--accent);
+    color:#0a0e14;
+  }
+  .btn-primary:hover{
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+  .btn-ghost{
+    border:1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover{ border-color: var(--accent-2); color: var(--accent-2); }
+
+  /* Hero visual: portrait framed in a thermal gradient ring */
+  .hero-visual{
+    aspect-ratio: 1/1;
+    border-radius:20px;
+    padding:4px;
+    background:
+      conic-gradient(from 210deg at 50% 50%,
+        #0a0e14, #1b2a3d, #2a5a7a, #38bdf8, #ffb347, #ff6a3d, #0a0e14);
+    position:relative;
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .hero-visual img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    border-radius:17px;
+  }
+  .hero-visual::after{
+    content:"";
+    position:absolute; inset:4px;
+    border-radius:17px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent 40%);
+    pointer-events:none;
+  }
+  .hero-visual .label{
+    position:absolute;
+    bottom:18px; left:18px;
+    font-size:0.72rem;
+    color: rgba(255,255,255,0.75);
+    background: rgba(10,14,20,0.55);
+    padding:6px 10px;
+    border-radius:6px;
+    backdrop-filter: blur(4px);
+    font-family: "SFMono-Regular", Consolas, monospace;
+  }
+
+  /* Section shell */
+  section{
+    max-width: var(--max-w);
+    margin:0 auto;
+    padding: 90px 24px;
+    border-top:1px solid var(--border);
+  }
+
+  .section-head{ margin-bottom:44px; }
+  .section-head .tag{
+    color: var(--accent-2);
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:600;
+    display:block;
+    margin-bottom:10px;
+  }
+  .section-head h2{
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight:700;
+    letter-spacing:-0.5px;
+  }
+
+  /* About */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:48px;
+  }
+  .about-grid p{ color: var(--text-dim); margin-bottom:16px; }
+
+  /* About — full-bleed digital-twin video background */
+  #about.about-video{
+    max-width:none;
+    width:100%;
+    padding:0;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    min-height:600px;
+  }
+  .about-video-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position: right center;
+    z-index:0;
+  }
+  .about-video-overlay{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      linear-gradient(to right, var(--bg) 0%, var(--bg) 30%, color-mix(in srgb, var(--bg) 55%, transparent) 62%, transparent 100%),
+      linear-gradient(to bottom, var(--bg), transparent 16%),
+      linear-gradient(to top, var(--bg), transparent 16%);
+  }
+  .about-inner{
+    position:relative;
+    z-index:2;
+    max-width: var(--max-w);
+    margin:0 auto;
+    padding:110px 24px;
+    width:100%;
+  }
+  .about-copy{ max-width:560px; }
+  .about-copy p{ color: var(--text-dim); margin-bottom:16px; }
+  .about-metrics{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px 30px;
+    margin-top:28px;
+  }
+  .about-metrics > div{ display:flex; flex-direction:column; }
+  .about-metrics b{ font-size:1.5rem; font-weight:800; color: var(--accent); line-height:1.1; }
+  .about-metrics span{ font-size:0.78rem; color: var(--text-dim); margin-top:2px; }
+  .about-video-badge{
+    position:absolute;
+    z-index:2;
+    right:24px;
+    bottom:20px;
+    font-size:0.72rem;
+    color: rgba(255,255,255,0.8);
+    background: rgba(10,14,20,0.55);
+    padding:6px 12px;
+    border-radius:999px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    backdrop-filter: blur(4px);
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:16px;
+  }
+  .stat{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background: var(--panel);
+  }
+  .stat .num{
+    font-size:1.8rem;
+    font-weight:800;
+    color: var(--accent);
+  }
+  .stat .lbl{
+    font-size:0.82rem;
+    color: var(--text-dim);
+    margin-top:4px;
+  }
+
+  /* Research interests */
+  .research-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+  }
+  .research-card{
+    padding:26px;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    transition: transform .2s, border-color .2s;
+  }
+  .research-card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(56,189,248,0.4);
+  }
+  .research-card .icon{
+    font-size:1.6rem;
+    margin-bottom:14px;
+  }
+  .research-card h3{
+    font-size:1.05rem;
+    margin-bottom:8px;
+  }
+  .research-card p{
+    color: var(--text-dim);
+    font-size:0.9rem;
+  }
+
+  /* Publications */
+  .pub-list{ display:flex; flex-direction:column; gap:14px; }
+  .pub-item{
+    display:flex;
+    gap:20px;
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background: var(--panel);
+    align-items:flex-start;
+  }
+  .pub-year{
+    flex-shrink:0;
+    width:64px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    color: var(--accent-2);
+    font-size:0.9rem;
+    padding-top:2px;
+  }
+  .pub-item h4{ font-size:0.98rem; margin-bottom:6px; }
+  .pub-item p{ color: var(--text-dim); font-size:0.85rem; }
+
+  /* Experience timeline */
+  .exp-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  .timeline-label{
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color: var(--accent);
+    margin-bottom:26px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .timeline{ position:relative; padding-left:28px; }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:6px; top:6px; bottom:6px;
+    width:1px;
+    background: var(--border);
+  }
+  .tl-item{ position:relative; padding-bottom:36px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:-28px; top:4px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background: var(--bg);
+    border:2px solid var(--accent);
+  }
+  .tl-item .meta{
+    font-size:0.78rem;
+    color: var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .tl-item h4{ font-size:1.05rem; margin-bottom:6px; }
+  .tl-item p{ color: var(--text-dim); font-size:0.9rem; max-width:640px; }
+
+  /* Projects */
+  .project-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:22px;
+  }
+  .project-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    background: var(--panel);
+  }
+  .project-thumb{
+    height:150px;
+    background: linear-gradient(135deg, rgba(255,106,61,0.25), rgba(56,189,248,0.2));
+    position:relative;
+  }
+  .project-thumb::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 14px);
+  }
+  .event-thumb{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color: var(--text-dim);
+    font-size:0.78rem;
+  }
+  .event-thumb .icon{ font-size:1.6rem; opacity:0.6; }
+  .event-role{
+    display:inline-block;
+    font-size:0.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    color: var(--accent);
+    border:1px solid rgba(255,106,61,0.35);
+    border-radius:999px;
+    padding:3px 10px;
+    margin-bottom:10px;
+  }
+
+  /* Events (per-event photo galleries) */
+  .events-list{ display:flex; flex-direction:column; gap:22px; }
+  .event-block{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background: var(--panel);
+    padding:24px;
+  }
+  .event-block h4{ font-size:1.1rem; margin-bottom:6px; }
+  .event-block .event-meta{ color: var(--text-dim); font-size:0.88rem; margin-bottom:16px; max-width:760px; }
+  .event-gallery{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap:14px;
+  }
+  .event-shot{
+    margin:0;
+    cursor:pointer;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background: var(--bg);
+    transition: transform .18s, border-color .18s;
+  }
+  .event-shot:hover{ transform: translateY(-3px); border-color: rgba(56,189,248,0.45); }
+  .event-shot img{ width:100%; height:130px; object-fit:cover; display:block; }
+  .event-shot figcaption{ font-size:0.76rem; color: var(--text-dim); padding:8px 10px; }
+  .event-empty{
+    display:flex; align-items:center; gap:10px;
+    font-size:0.82rem; color: var(--text-dim);
+    border:1px dashed var(--border); border-radius:10px;
+    padding:16px; background: rgba(255,255,255,0.02);
+  }
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed; inset:0; z-index:300;
+    display:none;
+    align-items:center; justify-content:center;
+    background: rgba(6,9,14,0.92);
+    backdrop-filter: blur(4px);
+    padding:40px 20px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox img{
+    max-width:min(1000px, 92vw); max-height:78vh;
+    border-radius:10px; display:block;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  }
+  .lightbox figure{ margin:0; text-align:center; }
+  .lightbox figcaption{
+    color: var(--text); font-size:0.95rem; margin-top:16px;
+    max-width:760px; margin-left:auto; margin-right:auto;
+  }
+  .lb-count{ display:block; color: var(--text-dim); font-size:0.8rem; margin-top:6px; }
+  .lb-btn{
+    position:absolute; top:50%; transform:translateY(-50%);
+    background: rgba(255,255,255,0.08); border:1px solid var(--border);
+    color: var(--text); width:46px; height:46px; border-radius:50%;
+    font-size:1.4rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: background .18s;
+  }
+  .lb-btn:hover{ background: rgba(255,255,255,0.16); }
+  .lb-prev{ left:24px; }
+  .lb-next{ right:24px; }
+  .lb-close{ top:22px; right:24px; transform:none; }
+  .project-body{ padding:22px; }
+  .project-body h4{ font-size:1.05rem; margin-bottom:8px; }
+  .project-body p{ color: var(--text-dim); font-size:0.88rem; margin-bottom:14px; }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tag-pill{
+    font-size:0.72rem;
+    padding:4px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  /* Tools */
+  .tool-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+  }
+  .tool-card{
+    display:block;
+    padding:24px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background: var(--panel);
+    transition: transform .2s, border-color .2s;
+  }
+  .tool-card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(255,106,61,0.4);
+  }
+  .tool-card .icon{
+    font-size:1.6rem;
+    margin-bottom:14px;
+  }
+  .tool-card h4{ font-size:1rem; margin-bottom:8px; }
+  .tool-card p{ color: var(--text-dim); font-size:0.85rem; margin-bottom:14px; }
+  .tool-status{
+    display:inline-block;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:4px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .tool-status.live{ color: var(--accent-2); border-color: rgba(56,189,248,0.4); }
+
+  /* Videos */
+  .video-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 540px));
+    gap:22px;
+    justify-content:center;
+  }
+  .video-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    background: var(--panel);
+  }
+  .video-frame{
+    aspect-ratio: 16/9;
+    background: #000;
+    position:relative;
+  }
+  .video-frame video{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit: cover;
+    background:#000;
+  }
+  .video-fallback{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background: linear-gradient(135deg, rgba(255,106,61,0.18), rgba(56,189,248,0.14));
+    color: var(--text-dim);
+    font-size:0.8rem;
+    text-align:center;
+    padding:16px;
+    pointer-events:none;
+  }
+  .video-fallback .play{
+    width:48px; height:48px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.2rem;
+    color:#fff;
+  }
+  .video-body{ padding:20px 22px; }
+  .video-body h4{ font-size:1rem; margin-bottom:6px; }
+  .video-body p{ color: var(--text-dim); font-size:0.85rem; }
+  .video-note{
+    margin-top:18px;
+    font-size:0.82rem;
+    color: var(--text-dim);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 18px;
+  }
+  .video-note code{ color: var(--accent-2); }
+
+  /* Contact */
+  .contact-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:24px;
+    padding:44px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,106,61,0.08), rgba(56,189,248,0.06));
+  }
+  .contact-box h2{ font-size:1.7rem; margin-bottom:10px; }
+  .contact-box p{ color: var(--text-dim); }
+  .contact-links{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  footer{
+    text-align:center;
+    padding:36px 24px 50px;
+    color: var(--text-dim);
+    font-size:0.82rem;
+  }
+
+  /* Theme switcher */
+  .theme-switcher{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    z-index:200;
+    display:flex;
+    gap:10px;
+    padding:10px;
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius:999px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+  .theme-swatch{
+    width:22px; height:22px;
+    border-radius:50%;
+    cursor:pointer;
+    border:2px solid transparent;
+    padding:0;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .theme-swatch:hover{ transform: scale(1.15); }
+  .theme-swatch.active{ border-color: var(--text); }
+  .swatch-sunset{ background: linear-gradient(135deg, #ff6a3d, #38bdf8); }
+  .swatch-copper{ background: linear-gradient(135deg, #c97a4a, #7fa8c9); }
+  .swatch-graphite{ background: linear-gradient(135deg, #22d3ee, #94a3b8); }
+  .swatch-amber{ background: linear-gradient(135deg, #f5b942, #60a5fa); }
+
+  @media (max-width: 860px){
+    .hero{ grid-template-columns:1fr; padding-top:90px; }
+    .hero-visual{ order:-1; max-width:280px; margin:0 auto; }
+    .about-grid, .research-grid, .project-grid, .video-grid, .tool-grid, .exp-grid{ grid-template-columns:1fr; }
+    .nav-toggle{ display:flex; }
+    .nav-links{
+      position:absolute;
+      top:100%;
+      left:0; right:0;
+      flex-direction:column;
+      gap:0;
+      background: var(--bg);
+      border-bottom:1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      padding:8px 0;
+      font-size:1rem;
+      max-height:0;
+      overflow:hidden;
+      transition: max-height .3s ease;
+    }
+    .nav-links.open{ max-height:70vh; }
+    .nav-links a{ padding:13px 24px; }
+    .nav-links a.active::after{ display:none; }
+    .nav-links a.active{ color: var(--accent); }
+    nav{ position:relative; }
+    .nav-cta{ display:none; }
+    .contact-box{ flex-direction:column; align-items:flex-start; }
+    #about.about-video{ min-height:auto; }
+    .about-inner{ padding:70px 24px; }
+    /* on narrow screens the video sits behind full-width text — darken more evenly */
+    .about-video-overlay{
+      background:
+        linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 78%, transparent) 100%),
+        linear-gradient(to bottom, var(--bg), transparent 12%),
+        linear-gradient(to top, var(--bg), transparent 12%);
+    }
+    .about-video-badge{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="field"></div>
+
+<header>
+  <nav>
+    <a href="#" class="logo" aria-label="Home">R<span>G</span>.</a>
+    <div class="nav-links" id="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#skills">Skills</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#events">Events</a>
+      <a href="#videos">Videos</a>
+      <a href="#tools">Tools</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-primary nav-cta" style="padding:9px 18px; font-size:0.82rem;">Get in touch</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+  </nav>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <div>
+    <span class="eyebrow">Villanova University · Laboratory for Advanced Thermal and Fluid Systems</span>
+    <h1>Reza Goharimehr<br><span class="accent">Thermal Scientist &amp; Engineer</span></h1>
+    <p class="lead">
+      I develop Flow Network Models and Digital Twins for large-scale data center liquid
+      cooling systems — working with NVIDIA, Vertiv, and Villanova University on the ARPA-E
+      OMNICOOL project to model single- and two-phase direct-to-chip cooling for
+      high-power GPU racks.
+    </p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">View my work</a>
+      <a href="Reza-Goharimehr-CV.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Download CV</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="images/reza-goharimehr.png" alt="Reza Goharimehr">
+    <div class="label">Villanova University · Mechanical Engineering</div>
+  </div>
+</section>
+
+<section id="about" class="about-video">
+  <video class="about-video-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <!-- Short, compressed background loop (replace with the ffmpeg-generated clip — see README-video.txt). Full demo lives in the Videos section. -->
+    <source src="videos/digital-twin-bg.mp4" type="video/mp4">
+  </video>
+  <div class="about-video-overlay"></div>
+  <div class="about-inner">
+    <div class="section-head">
+      <span class="tag">Who I am</span>
+      <h2>About Me</h2>
+    </div>
+    <div class="about-copy">
+      <p>
+        I'm a graduate researcher in the Department of Mechanical Engineering at Villanova
+        University, working under Dr. Alfonso Ortega in the Laboratory for Advanced Thermal
+        and Fluid Systems. My research focuses on Flow Network Modeling (FNM) and Digital Twin
+        development for large-scale, high-power data center cooling systems.
+      </p>
+      <p>
+        I lead the development of a two-phase component library (cold-plates, quick disconnects,
+        flow regulators, heat exchangers) in the Flownex Simulation Environment, and integrate
+        these models into an interactive Digital Twin built on NVIDIA Omniverse — connecting
+        physics-based simulation, live telemetry, and even XR control via Apple Vision Pro.
+      </p>
+    </div>
+  </div>
+  <span class="about-video-badge">OMNICOOL Digital Twin · live simulation</span>
+</section>
+
+<section id="research">
+  <div class="section-head">
+    <span class="tag">Focus areas</span>
+    <h2>Research Interests</h2>
+  </div>
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="icon">🔥</div>
+      <h3>Heat &amp; Mass Transfer</h3>
+      <p>Conduction, convection, and radiation modeling in complex geometries and multiphase systems.</p>
+    </div>
+    <div class="research-card">
+      <div class="icon">🌀</div>
+      <h3>Computational Fluid Dynamics</h3>
+      <p>High-fidelity CFD simulation, mesh convergence studies, and parametric design-of-experiments.</p>
+    </div>
+    <div class="research-card">
+      <div class="icon">⚙️</div>
+      <h3>Thermal-Fluid Systems</h3>
+      <p>System-level thermal management for energy, propulsion, and electronics applications.</p>
+    </div>
+    <div class="research-card">
+      <div class="icon">📊</div>
+      <h3>Data-Driven Modeling</h3>
+      <p>Reduced-order and surrogate models built from simulation matrices to accelerate design cycles.</p>
+    </div>
+    <div class="research-card">
+      <div class="icon">🧪</div>
+      <h3>Experimental Validation</h3>
+      <p>Bench and lab-scale testing to validate and calibrate computational thermal models.</p>
+    </div>
+    <div class="research-card">
+      <div class="icon">🛠️</div>
+      <h3>Design Optimization</h3>
+      <p>Coupling simulation with optimization workflows to improve thermal efficiency and reliability.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <span class="tag">Toolbox</span>
+    <h2>Skills &amp; Software</h2>
+  </div>
+  <div class="about-grid">
+    <div>
+      <h4 style="font-size:0.95rem; margin-bottom:12px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px; font-weight:600;">Simulation &amp; Analysis</h4>
+      <div class="tags">
+        <span class="tag-pill">Ansys Fluent (Expert)</span>
+        <span class="tag-pill">Ansys CFX (Expert)</span>
+        <span class="tag-pill">Ansys Workbench (Expert)</span>
+        <span class="tag-pill">Flownex SE</span>
+        <span class="tag-pill">NVIDIA Omniverse</span>
+        <span class="tag-pill">Tecplot</span>
+        <span class="tag-pill">ParaView</span>
+        <span class="tag-pill">nTop</span>
+      </div>
+    </div>
+    <div>
+      <h4 style="font-size:0.95rem; margin-bottom:12px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px; font-weight:600;">Programming</h4>
+      <div class="tags">
+        <span class="tag-pill">FORTRAN (Expert)</span>
+        <span class="tag-pill">MATLAB</span>
+        <span class="tag-pill">Python</span>
+        <span class="tag-pill">C++</span>
+        <span class="tag-pill">C#</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="section-head">
+    <span class="tag">Selected work</span>
+    <h2>Publications &amp; Reports</h2>
+  </div>
+  <div class="pub-list">
+    <div class="pub-item">
+      <div class="pub-year">2026</div>
+      <div>
+        <h4>Development of a Flow Network Modeling Approach for End-to-End Data Center Direct-to-Chip Two-Phase Cooling Systems</h4>
+        <p>A. Heydari, <strong>R. Goharimehr*</strong>, A. Ortega, M. Mehrabikermani, Y. Manaserh, V. Britz, M. Venter — 42nd Semiconductor Thermal Measurement, Modeling &amp; Management Symposium (SEMI-THERM), San Jose, CA. (*Corresponding author)</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2024</div>
+      <div>
+        <h4>Studying a droplet impaction on a vibrating porous medium</h4>
+        <p>E. Ezzatneshan, R. Sadraei, <strong>R. Goharimehr</strong> — Engineering Applications of Computational Fluid Mechanics, 18(1), 2410360.</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2023</div>
+      <div>
+        <h4>Seeing new depths: visualizing the three-dimensional flow field of a free-swimming alga</h4>
+        <p>G. Pradipta, V. Tran, <strong>R. Goharimehr</strong>, J. Hong, X. Yong, X. Cheng — Bulletin of the American Physical Society (APS).</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2021</div>
+      <div>
+        <h4>Study of fingering dynamics of two immiscible fluids in a homogeneous porous medium with considering wettability effects using a pore-scale multicomponent lattice Boltzmann model</h4>
+        <p>E. Ezzatneshan, <strong>R. Goharimehr</strong> — European Journal of Computational Mechanics, 30(4–6).</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2021</div>
+      <div>
+        <h4>A pseudopotential lattice Boltzmann method for simulation of two-phase flow transport in porous medium at high-density and high-viscosity ratios</h4>
+        <p>E. Ezzatneshan, <strong>R. Goharimehr</strong> — Geofluids, 2021(1), 5668743.</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2020</div>
+      <div>
+        <h4>Study of spontaneous mobility and imbibition of a liquid droplet in contact with fibrous porous media considering wettability effects</h4>
+        <p>E. Ezzatneshan, <strong>R. Goharimehr</strong> — Physics of Fluids, 32(11).</p>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2020</div>
+      <div>
+        <h4>Effect of multiphase lattice Boltzmann collision models with single- and multi-relaxation times for simulation of liquid-vapor two-phase flows</h4>
+        <p><strong>R. Goharimehr</strong> — Mechanical Engineering Sharif, 363(1), 77–88 (in Persian).</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px;">
+    <a href="https://scholar.google.com/citations?user=eXuwz8wAAAAJ&amp;hl=en" class="btn btn-ghost" target="_blank" rel="noopener">View full profile on Google Scholar</a>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-head">
+    <span class="tag">Career</span>
+    <h2>Experience &amp; Education</h2>
+  </div>
+  <div class="exp-grid">
+    <div>
+      <h3 class="timeline-label">Experience</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="meta">Jan 2024 — Present</div>
+          <h4>Ph.D. Researcher, Mechanical Engineering · Villanova University</h4>
+          <p>Research Assistant in the Laboratory for Advanced Thermal and Fluid Systems, advised by Dr. Alfonso Ortega. Leading development of Digital Twins of large-scale data center liquid cooling systems (ES2 Project 5.1) and Flow Network Models for the ARPA-E OMNICOOL project with NVIDIA and Vertiv, in collaboration with Dr. Bahgat Sammakia (Binghamton University).</p>
+        </div>
+        <div class="tl-item">
+          <div class="meta">Aug 2022 — Dec 2023</div>
+          <h4>Ph.D. Student &amp; Teaching/Research Assistant · Binghamton University, SUNY</h4>
+          <p>Thomas J. Watson College of Engineering and Applied Science, Department of Mechanical Engineering. Began doctoral studies before transferring to Villanova University to continue Ph.D. research under Dr. Alfonso Ortega.</p>
+        </div>
+        <div class="tl-item">
+          <div class="meta">Jun 2018 — Aug 2022</div>
+          <h4>Research Assistant · Multiphase Flow Laboratory, Shahid Beheshti University</h4>
+          <p>Tehran, Iran, under the supervision of Dr. E. Ezzatneshan. Mentored undergraduate students through the research process on multiphase and multicomponent lattice Boltzmann simulation.</p>
+        </div>
+        <div class="tl-item">
+          <div class="meta">Sep 2017 — Jun 2018</div>
+          <h4>Teaching Assistant · Shahid Beheshti University</h4>
+          <p>New Technologies Engineering Department. Taught the graduate course "Advanced Numerical Computation Methods" (~25 students/semester), including FORTRAN, Tecplot, and MATLAB instruction; designed lesson plans and course materials.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="timeline-label">Education</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="meta">Sep 2016 — Sep 2019</div>
+          <h4>M.S., Mechanical Engineering · Shahid Beheshti University (SBU)</h4>
+          <p>Tehran, Iran. GPA 16.12/20 (highest rank in class). Dissertation: "Numerical Simulation of Multicomponent Multiphase Flow Transport through a Porous Media Using the Lattice Boltzmann Method," advised by Dr. E. Ezzatneshan.</p>
+        </div>
+        <div class="tl-item">
+          <div class="meta">Sep 2011 — Nov 2015</div>
+          <h4>B.S., Mechanical Engineering · Islamic Azad University (IAUN)</h4>
+          <p>Najafabad, Isfahan, Iran. GPA 15.59/20. Final project: simulation of fluid flow around a circular obstacle at various Reynolds numbers using Ansys CFX.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head">
+    <span class="tag">Selected work</span>
+    <h2>Projects</h2>
+  </div>
+  <div class="project-grid">
+    <div class="project-card">
+      <div class="project-thumb"></div>
+      <div class="project-body">
+        <h4>OMNICOOL — Two-Phase Cooling POD (ARPA-E)</h4>
+        <p>A 250 kW self-contained, containerized POD with a clear scaling path to 1 MW+, demonstrated live at the ARPA-E Energy Innovation Summit. End-to-end two-phase pumped refrigeration (R515B heat rejection / R1234yf at the chip) achieves ~0.005°C/W package thermal resistance, PUE below 1.05, and zero water consumption at ≥40°C ambient. Built with Vertiv, Boyd (Eaton), Binghamton University, and Villanova University, integrated with a physics-based NVIDIA Omniverse Digital Twin.</p>
+        <div class="tags"><span class="tag-pill">ARPA-E</span><span class="tag-pill">Two-Phase Refrigeration</span><span class="tag-pill">NVIDIA Omniverse</span><span class="tag-pill">Digital Twin</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"></div>
+      <div class="project-body">
+        <h4>Two-Phase Data Center Component Library</h4>
+        <p>Cold-plates, quick disconnects, flow regulators, and two-phase heat exchangers developed in the Flownex Simulation Environment and validated against experimental test data (e.g. Kandlikar two-phase cold-plate model).</p>
+        <div class="tags"><span class="tag-pill">Flownex</span><span class="tag-pill">Two-Phase Cooling</span><span class="tag-pill">Validation</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"></div>
+      <div class="project-body">
+        <h4>Single-Phase vs. Two-Phase Cooling Comparison</h4>
+        <p>Transient simulation of identical server racks under a 40%→100% heat-load spike; the two-phase system showed a 30% lower chip case-temperature rise (29.5°C vs. 42.1°C) due to latent-heat cooling.</p>
+        <div class="tags"><span class="tag-pill">Transient Simulation</span><span class="tag-pill">System Comparison</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"></div>
+      <div class="project-body">
+        <h4>XR Remote Control Interface (Apple Vision Pro)</h4>
+        <p>Immersive control panel for the Digital Twin — IT load, ambient temperature, fan speed, and altitude set directly in XR and streamed to the Omniverse simulation via a structured command/telemetry layer.</p>
+        <div class="tags"><span class="tag-pill">XR / visionOS</span><span class="tag-pill">Remote Control</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="events">
+  <div class="section-head">
+    <span class="tag">On the road</span>
+    <h2>Conferences &amp; Exhibitions</h2>
+  </div>
+  <div id="events-list" class="events-list"></div>
+  <!-- TO ADD PHOTOS: drop image files into personal-website/images/events/, then add a line to the matching event's `photos` array in the EVENTS config near the bottom of this file, e.g. { src: "images/events/ces-booth.jpg", caption: "At the ARPA-E booth" } -->
+</section>
+
+<section id="tools">
+  <div class="section-head">
+    <span class="tag">Build</span>
+    <h2>Calculators &amp; Tools</h2>
+  </div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/heat-transfer-calculator.html">
+      <div class="icon">🌡️</div>
+      <h4>Heat Transfer Calculator</h4>
+      <p>Quick conduction/convection Q calculations from geometry and material inputs.</p>
+      <span class="tool-status">Coming soon</span>
+    </a>
+    <a class="tool-card" href="tools/reynolds-calculator.html">
+      <div class="icon">🌀</div>
+      <h4>Reynolds Number Tool</h4>
+      <p>Determine flow regime from velocity, characteristic length, and fluid properties.</p>
+      <span class="tool-status">Coming soon</span>
+    </a>
+    <a class="tool-card" href="tools/unit-converter.html">
+      <div class="icon">🔁</div>
+      <h4>Engineering Unit Converter</h4>
+      <p>Convert between SI and imperial units for thermal and fluid quantities.</p>
+      <span class="tool-status">Coming soon</span>
+    </a>
+  </div>
+  <!-- Each card links to a standalone page in personal-website/tools/. Build a tool as its own HTML file (e.g. heat-transfer-calculator.html) and it goes live automatically — no changes needed here. -->
+</section>
+
+<section id="videos">
+  <div class="section-head">
+    <span class="tag">Watch</span>
+    <h2>Simulation &amp; Demo Videos</h2>
+  </div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-frame">
+        <video controls preload="none">
+          <source src="videos/omnicool.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-body">
+        <h4>OMNICOOL Digital Twin Demo</h4>
+        <p>Walkthrough of the NVIDIA Omniverse Digital Twin for the OMNICOOL two-phase data center cooling system — coupling Flow Network Modeling with CFD, live telemetry, and interactive control.</p>
+      </div>
+    </div>
+    <!-- To add another video: copy the .video-card block above, then set its <source src> to a file in personal-website/videos/ and update the title/description. -->
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <div>
+      <h2>Let's work together</h2>
+      <p>Open to research collaboration, consulting, and engineering roles in thermal-fluid sciences.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:rgoharim@villanova.edu" class="btn btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/reza-goharimehr-b7383b258/" class="btn btn-ghost" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=eXuwz8wAAAAJ&hl=en" class="btn btn-ghost" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://orcid.org/0000-0002-3584-8728" class="btn btn-ghost" target="_blank" rel="noopener">ORCID</a>
+      <a href="https://github.com/RGoharimehr/" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Reza Goharimehr. Built with curiosity for thermal science and engineering.
+</footer>
+
+<div class="theme-switcher" role="group" aria-label="Color theme">
+  <button class="theme-swatch swatch-sunset" data-theme="sunset" title="Sunset (orange &amp; cyan)" aria-label="Sunset theme"></button>
+  <button class="theme-swatch swatch-copper" data-theme="copper" title="Navy &amp; Copper" aria-label="Navy and Copper theme"></button>
+  <button class="theme-swatch swatch-graphite" data-theme="graphite" title="Graphite &amp; Cyan" aria-label="Graphite and Cyan theme"></button>
+  <button class="theme-swatch swatch-amber" data-theme="amber" title="Slate &amp; Amber" aria-label="Slate and Amber theme"></button>
+</div>
+
+<script>
+(function(){
+  var THEMES = ['sunset','copper','graphite','amber'];
+  var root = document.documentElement;
+  var saved = localStorage.getItem('site-theme');
+  if(saved && THEMES.indexOf(saved) !== -1 && saved !== 'sunset'){
+    root.setAttribute('data-theme', saved);
+  }
+  function setTheme(t){
+    if(t === 'sunset'){ root.removeAttribute('data-theme'); }
+    else{ root.setAttribute('data-theme', t); }
+    localStorage.setItem('site-theme', t);
+    document.querySelectorAll('.theme-swatch').forEach(function(el){
+      el.classList.toggle('active', el.dataset.theme === t);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var current = saved && THEMES.indexOf(saved) !== -1 ? saved : 'sunset';
+    document.querySelectorAll('.theme-swatch').forEach(function(el){
+      el.classList.toggle('active', el.dataset.theme === current);
+      el.addEventListener('click', function(){ setTheme(el.dataset.theme); });
+    });
+  });
+})();
+</script>
+
+<!-- Lightbox overlay for event photo galleries -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-btn lb-close" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" aria-label="Previous photo">&lsaquo;</button>
+  <button class="lb-btn lb-next" aria-label="Next photo">&rsaquo;</button>
+  <figure>
+    <img src="" alt="">
+    <figcaption></figcaption>
+    <span class="lb-count"></span>
+  </figure>
+</div>
+
+<script>
+(function(){
+  /* ============================================================
+     EVENT PHOTOS — to publish a photo:
+       1) drop the file into  personal-website/images/events/
+       2) add one line to that event's `photos` array below:
+          { src: "images/events/FILENAME.jpg", caption: "Your caption here" }
+     ============================================================ */
+  var EVENTS = [
+    {
+      role: "Exhibitor · Speaker · Short Course",
+      title: "SEMI-THERM 42 — San Jose, CA",
+      meta: "Mar 2026 · Exhibited at the Villanova Engineering booth, presented the FNM paper, and contributed to the Digital Twin short course module.",
+      photos: [
+        // { src: "images/events/semitherm-podium.jpg", caption: "Presenting the FNM paper on stage" },
+        // { src: "images/events/semitherm-booth.jpg", caption: "The Villanova Engineering booth" },
+      ]
+    },
+    {
+      role: "Exhibitor",
+      title: "CES 2026 — U.S. DOE ARPA-E Booth",
+      meta: "Jan 2026 · Represented OMNICOOL alongside NVIDIA, Vertiv, Boyd, Binghamton, and Villanova.",
+      photos: [
+        // { src: "images/events/ces-booth.jpg", caption: "At the ARPA-E booth with the OMNICOOL POD" },
+      ]
+    },
+    {
+      role: "Exhibitor",
+      title: "SC25 — Supercomputing 2025",
+      meta: "Nov 2025 · Exhibited the OMNICOOL Digital Twin and end-to-end transient two-phase simulation.",
+      photos: [
+        // { src: "images/events/sc25-team.jpg", caption: "OMNICOOL team at SC25" },
+      ]
+    },
+    {
+      role: "Exhibitor",
+      title: "ARPA-E Energy Innovation Summit",
+      meta: "2026 · Live 250 kW two-phase cooling POD demonstration with a scaling path to 1 MW+.",
+      photos: [
+        // { src: "images/events/arpae-pod.jpg", caption: "The live 250 kW cooling POD" },
+      ]
+    }
+  ];
+
+  var flat = [];
+
+  function render(){
+    var list = document.getElementById('events-list');
+    if(!list) return;
+    EVENTS.forEach(function(ev){
+      var block = document.createElement('div');
+      block.className = 'event-block';
+
+      var role = document.createElement('span');
+      role.className = 'event-role';
+      role.textContent = ev.role;
+      block.appendChild(role);
+
+      var h = document.createElement('h4');
+      h.textContent = ev.title;
+      block.appendChild(h);
+
+      var m = document.createElement('p');
+      m.className = 'event-meta';
+      m.textContent = ev.meta;
+      block.appendChild(m);
+
+      if(ev.photos && ev.photos.length){
+        var g = document.createElement('div');
+        g.className = 'event-gallery';
+        ev.photos.forEach(function(ph){
+          var idx = flat.length;
+          flat.push(ph);
+          var fig = document.createElement('figure');
+          fig.className = 'event-shot';
+          var img = document.createElement('img');
+          img.src = ph.src; img.alt = ph.caption || ev.title; img.loading = 'lazy';
+          fig.appendChild(img);
+          if(ph.caption){
+            var cap = document.createElement('figcaption');
+            cap.textContent = ph.caption;
+            fig.appendChild(cap);
+          }
+          fig.addEventListener('click', function(){ openLightbox(idx); });
+          g.appendChild(fig);
+        });
+        block.appendChild(g);
+      } else {
+        var empty = document.createElement('div');
+        empty.className = 'event-empty';
+        var e1 = document.createElement('span'); e1.textContent = '📷';
+        var e2 = document.createElement('span'); e2.textContent = 'Photos coming soon';
+        empty.appendChild(e1); empty.appendChild(e2);
+        block.appendChild(empty);
+      }
+      list.appendChild(block);
+    });
+  }
+
+  var lb, lbImg, lbCap, lbCount, curr = 0;
+  function openLightbox(i){ curr = i; update(); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeLightbox(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
+  function step(d){ if(!flat.length) return; curr = (curr + d + flat.length) % flat.length; update(); }
+  function update(){
+    var ph = flat[curr];
+    lbImg.src = ph.src; lbImg.alt = ph.caption || '';
+    lbCap.textContent = ph.caption || '';
+    lbCount.textContent = (curr + 1) + ' / ' + flat.length;
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    render();
+    lb = document.getElementById('lightbox');
+    lbImg = lb.querySelector('img');
+    lbCap = lb.querySelector('figcaption');
+    lbCount = lb.querySelector('.lb-count');
+    lb.querySelector('.lb-close').addEventListener('click', closeLightbox);
+    lb.querySelector('.lb-prev').addEventListener('click', function(e){ e.stopPropagation(); step(-1); });
+    lb.querySelector('.lb-next').addEventListener('click', function(e){ e.stopPropagation(); step(1); });
+    lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', function(e){
+      if(!lb.classList.contains('open')) return;
+      if(e.key === 'Escape') closeLightbox();
+      else if(e.key === 'ArrowLeft') step(-1);
+      else if(e.key === 'ArrowRight') step(1);
+    });
+  });
+})();
+</script>
+
+<script>
+/* Navigation, scroll-spy and scroll-reveal — registered last so event blocks already exist */
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    // --- Mobile menu ---
+    var toggle = document.getElementById('nav-toggle');
+    var links = document.getElementById('nav-links');
+    if(toggle && links){
+      toggle.addEventListener('click', function(){
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // --- Scroll-spy active nav link ---
+    var navMap = {};
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function(a){
+      var id = a.getAttribute('href').slice(1);
+      if(id) navMap[id] = a;
+    });
+    var sections = Object.keys(navMap).map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if('IntersectionObserver' in window && sections.length){
+      var spy = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            for(var k in navMap){ navMap[k].classList.remove('active'); }
+            if(navMap[e.target.id]) navMap[e.target.id].classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      sections.forEach(function(s){ spy.observe(s); });
+    }
+
+    // --- Scroll reveal ---
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if('IntersectionObserver' in window && !reduce){
+      var sel = '.section-head, .research-card, .project-card, .event-block, .pub-item, .tl-item, .tool-card, .video-card, .contact-box, #skills .about-grid';
+      var ro = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      [].slice.call(document.querySelectorAll(sel)).forEach(function(el){
+        // skip elements already on-screen at load to avoid a hidden-flash
+        if(el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        el.classList.add('reveal');
+        ro.observe(el);
+      });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

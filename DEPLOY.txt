@@ -1,0 +1,60 @@
+================================================================
+ DEPLOYING TO GITHUB PAGES  ->  https://rgoharimehr.github.io/
+================================================================
+
+*** DO THIS FIRST — COMPRESS THE VIDEOS ***
+GitHub REJECTS any file larger than 100 MB. Both files in /videos are
+~316 MB, so the upload WILL FAIL until you shrink them. Follow
+README-video.txt to compress:
+  - videos/digital-twin-bg.mp4   (About background loop)
+  - videos/omnicool.mp4          (full demo)
+Get both well under 100 MB (ideally a few MB each) before uploading.
+
+----------------------------------------------------------------
+OPTION A — GitHub Desktop (no command line)
+----------------------------------------------------------------
+1. Install GitHub Desktop: https://desktop.github.com  and sign in.
+2. On github.com create a NEW repository named EXACTLY:
+        RGoharimehr.github.io
+   (public, do not add a README).
+3. In GitHub Desktop: File > Clone repository > pick RGoharimehr.github.io
+   > choose a local folder.
+4. Copy EVERYTHING inside this "personal-website" folder
+   (index.html, images/, videos/, tools/, robots.txt, sitemap.xml,
+    .nojekyll, etc.) INTO the cloned repo folder.
+   IMPORTANT: index.html must sit at the repo ROOT, not inside a subfolder.
+5. Back in GitHub Desktop: type a summary ("initial site") > Commit to main
+   > Push origin.
+6. Wait ~1-2 minutes, then open:  https://rgoharimehr.github.io/
+
+----------------------------------------------------------------
+OPTION B — command line (git)
+----------------------------------------------------------------
+First create the empty repo "RGoharimehr.github.io" on github.com, then:
+
+  cd "personal-website"
+  git init
+  git add .
+  git commit -m "Initial personal website"
+  git branch -M main
+  git remote add origin https://github.com/RGoharimehr/RGoharimehr.github.io.git
+  git push -u origin main
+
+Then on github.com open the repo > Settings > Pages, and confirm
+"Source" = Deploy from a branch, Branch = main / (root). Save.
+Your site: https://rgoharimehr.github.io/
+
+----------------------------------------------------------------
+UPDATING LATER
+----------------------------------------------------------------
+Edit files locally, then commit + push again (Desktop: Commit > Push;
+CLI: git add . && git commit -m "update" && git push). Changes go live
+in a minute or two.
+
+----------------------------------------------------------------
+CUSTOM DOMAIN (optional, later)
+----------------------------------------------------------------
+If you buy a domain (e.g. rezagoharimehr.com), add it under
+Settings > Pages > Custom domain, and tell me the domain so I can
+update the SEO tags (canonical / og:url / sitemap) to match.
+================================================================
