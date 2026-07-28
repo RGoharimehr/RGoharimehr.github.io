@@ -142,8 +142,10 @@
     if(!token){ banner("authBanner","Enter and save a token first.","err"); return; }
     banner("authBanner","Loading content.json from GitHub…","info");
     fetch(API+"/contents/"+FILE+"?ref="+BRANCH, { headers:ghHeaders(), cache:"no-store" })
-      .then(function(r){ if(r.status===401) throw new Error("Bad token (401). Check the token and its permissions.");
-        if(r.status===404) throw new Error("content.json not found in the repo."); if(!r.ok) throw new Error("GitHub error "+r.status); return r.json(); })
+      .then(function(r){ if(r.status===401) throw new Error("Invalid token (401). Copy the token again — it may be truncated or expired.");
+        if(r.status===403) throw new Error("Token lacks permission (403). Give it Contents: Read and write on this repo.");
+        if(r.status===404) throw new Error("Token can't see this repo (404). Fix: on the token, set Repository access → Only select repositories → RGoharimehr.github.io, and Permissions → Contents: Read and write. (The file exists — this is a token-access issue.)");
+        if(!r.ok) throw new Error("GitHub error "+r.status); return r.json(); })
       .then(function(d){ sha=d.sha; content=JSON.parse(b64decodeUtf8(d.content));
         banner("authBanner","✓ Connected as authorized user. Content loaded.","ok");
         $("editorArea").style.display="block"; $("footerbar").style.display="flex"; $("saveBanner2").style.display="block";
