@@ -46,7 +46,7 @@
     --accent-glow: rgba(255,106,61,0.35);
     --field-a: rgba(255,106,61,0.12);
     --field-b: rgba(56,189,248,0.10);
-    --max-w: 1100px;
+    --max-w: 1400px;
     /* D2Q9 lattice-Boltzmann stencil tile: square grid (axial velocities) + X diagonals (diagonal velocities) + lattice nodes */
     --lattice-tile: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='58'%20height='58'%3E%3Cg%20stroke='%239ec7f0'%20stroke-opacity='0.5'%20stroke-width='1'%20fill='none'%3E%3Cpath%20d='M0%200H58M0%200V58'/%3E%3Cpath%20d='M0%200L58%2058M58%200L0%2058'/%3E%3C/g%3E%3Cg%20fill='%239ec7f0'%3E%3Ccircle%20cx='0'%20cy='0'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='58'%20cy='0'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='0'%20cy='58'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='58'%20cy='58'%20r='2.1'%20fill-opacity='0.8'/%3E%3Ccircle%20cx='29'%20cy='29'%20r='1.4'%20fill-opacity='0.55'/%3E%3C/g%3E%3C/svg%3E");
   }
@@ -305,6 +305,9 @@
   /* Hero visual: portrait framed in a thermal gradient ring */
   .hero-visual{
     aspect-ratio: 1/1;
+    max-width: 440px;
+    width: 100%;
+    justify-self: end;
     border-radius:20px;
     padding:4px;
     background:
