@@ -180,6 +180,16 @@
         ]
       },
       {
+        "title": "FASCOLOR — Real-Time False-Color Visualization (Omniverse)",
+        "text": "An NVIDIA Omniverse Kit extension that maps live simulation results — velocity, temperature, pressure, and vapor quality — onto USD scene geometry as real-time false-color (colormap) fields. Built for the OMNICOOL Digital Twin, it streams Flow Network Modeling and CFD outputs onto the 3D data-center model with adjustable colormaps and scalar ranges for interactive results visualization.",
+        "tags": [
+          "NVIDIA Omniverse",
+          "USD",
+          "Visualization",
+          "Digital Twin"
+        ]
+      },
+      {
         "title": "Two-Phase Data Center Component Library",
         "text": "Cold-plates, quick disconnects, flow regulators, and two-phase heat exchangers developed in the Flownex Simulation Environment and validated against experimental test data (e.g. Kandlikar two-phase cold-plate model).",
         "tags": [
