@@ -89,16 +89,14 @@
 <main>
   <!-- Auth -->
   <fieldset>
-    <legend>GitHub access</legend>
-    <p class="muted">Paste a <b>fine-grained personal access token</b> with <b>Contents: Read &amp; write</b> on the
-      <code>RGoharimehr.github.io</code> repo. It is stored only in this browser (localStorage) and never committed.
-      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create a token →</a></p>
+    <legend>Admin Login</legend>
+    <p class="muted">Enter your website admin password. GitHub credentials stay on the server and are never exposed to this page.</p>
     <div class="field">
-      <label>Personal access token</label>
+      <label>Admin password</label>
       <div class="row">
-        <input type="password" id="token" placeholder="github_pat_..." style="flex:1; min-width:240px;">
-        <button id="saveTokenBtn">Save token</button>
-        <button id="clearTokenBtn">Clear</button>
+        <input type="password" id="password" placeholder="Enter password" style="flex:1; min-width:240px;">
+        <button id="loginBtn" class="primary">Login</button>
+        <button id="logoutBtn">Logout</button>
       </div>
     </div>
     <div id="authBanner" class="banner"></div>
@@ -176,14 +174,13 @@
 
 <script>
 (function(){
-  var OWNER="RGoharimehr", REPO="RGoharimehr.github.io", BRANCH="main", FILE="content.json";
-  var API="https://api.github.com/repos/"+OWNER+"/"+REPO;
-  var token = localStorage.getItem("gh_admin_token") || "";
+  var API_BASE = "https://YOUR-RENDER-ADMIN-API.onrender.com";
+  var session = sessionStorage.getItem("admin_session") || "";
   var content=null, sha=null, dirty=false;
 
   var $=function(id){return document.getElementById(id);};
-  $("repoLabel").textContent = OWNER+"/"+REPO;
-  if(token) $("token").value = token;
+  $("repoLabel").textContent = "Secure admin mode";
+  if(session) loadContent();
 
   function banner(id, msg, kind){ var b=$(id); b.textContent=msg; b.className="banner show "+(kind||"info"); }
   function hide(id){ $(id).className="banner"; }
@@ -194,22 +191,38 @@
   function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
   function b64decodeUtf8(b64){ return decodeURIComponent(escape(atob(b64.replace(/\n/g,"")))); }
 
-  function ghHeaders(){ return { "Authorization":"Bearer "+token, "Accept":"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28" }; }
+  function apiHeaders(){ return { "Content-Type":"application/json", "X-Admin-Session":session }; }
+
+  function login(){
+    var password=$("password").value;
+    if(!password){ banner("authBanner","Enter your password.","err"); return; }
+    banner("authBanner","Signing in…","info");
+    fetch(API_BASE+"/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:password})})
+      .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
+      .then(function(res){
+        if(!res.ok) throw new Error(res.d.error||"Login failed");
+        session=res.d.session;
+        sessionStorage.setItem("admin_session",session);
+        $("password").value="";
+        loadContent();
+      }).catch(function(e){banner("authBanner",e.message,"err");});
+  }
 
   function loadContent(){
-    if(!token){ banner("authBanner","Enter and save a token first.","err"); return; }
-    banner("authBanner","Loading content.json from GitHub…","info");
-    fetch(API+"/contents/"+FILE+"?ref="+BRANCH, { headers:ghHeaders(), cache:"no-store" })
-      .then(function(r){ if(r.status===401) throw new Error("Invalid token (401). Copy the token again — it may be truncated or expired.");
-        if(r.status===403) throw new Error("Token lacks permission (403). Give it Contents: Read and write on this repo.");
-        if(r.status===404) throw new Error("Token can't see this repo (404). Fix: on the token, set Repository access → Only select repositories → RGoharimehr.github.io, and Permissions → Contents: Read and write. (The file exists — this is a token-access issue.)");
-        if(!r.ok) throw new Error("GitHub error "+r.status); return r.json(); })
-      .then(function(d){ sha=d.sha; content=JSON.parse(b64decodeUtf8(d.content));
-        banner("authBanner","✓ Connected as authorized user. Content loaded.","ok");
+    if(!session){ banner("authBanner","Enter the admin password.","info"); return; }
+    banner("authBanner","Loading website content…","info");
+    fetch(API_BASE+"/api/content",{headers:apiHeaders(),cache:"no-store"})
+      .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
+      .then(function(res){
+        if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
+        if(!res.ok) throw new Error(res.d.error||"Unable to load content");
+        sha=res.d.sha; content=res.d.content;
+        banner("authBanner","✓ Logged in. Content loaded.","ok");
         $("editorArea").style.display="block"; $("footerbar").style.display="flex"; $("saveBanner2").style.display="block";
-        buildEditor(); $("raw").value=JSON.stringify(content,null,2); refreshSectionImagePreview(); markClean(); })
-      .catch(function(e){ banner("authBanner", e.message, "err"); });
+        buildEditor(); $("raw").value=JSON.stringify(content,null,2); refreshSectionImagePreview(); markClean();
+      }).catch(function(e){ banner("authBanner",e.message,"err"); });
   }
+
 
   // ---------- Recursive form builder ----------
   function labelText(k){ return k.replace(/([A-Z])/g," $1").replace(/^./,function(c){return c.toUpperCase();}); }
@@ -286,16 +299,17 @@
   // ---------- Save ----------
   function save(){
     if(!content){ return; }
-    banner("saveBanner","Committing to GitHub…","info");
-    var body={ message: ($("commitMsg").value.trim()||"Update content via admin"),
-      content: b64encode(JSON.stringify(content,null,2)+"\n"), sha: sha, branch: BRANCH };
-    fetch(API+"/contents/"+FILE, { method:"PUT", headers:ghHeaders(), body:JSON.stringify(body) })
-      .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, status:r.status, d:d}; }); })
-      .then(function(res){ if(!res.ok) throw new Error((res.d&&res.d.message)||("GitHub error "+res.status));
-        sha=res.d.content.sha; markClean();
-        banner("saveBanner","✓ Saved & pushed. Live site will rebuild in ~1–2 min at https://rgoharimehr.github.io/","ok");
-        $("commitMsg").value=""; })
-      .catch(function(e){ banner("saveBanner","Save failed: "+e.message,"err"); });
+    banner("saveBanner","Saving to website…","info");
+    var body={message:($("commitMsg").value.trim()||"Update content via admin"),content:content};
+    fetch(API_BASE+"/api/content",{method:"PUT",headers:apiHeaders(),body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
+      .then(function(res){
+        if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
+        if(!res.ok) throw new Error(res.d.error||"Save failed");
+        sha=res.sha||sha; markClean();
+        banner("saveBanner","✓ Saved. GitHub Pages will update shortly.","ok");
+        $("commitMsg").value="";
+      }).catch(function(e){banner("saveBanner","Save failed: "+e.message,"err");});
   }
 
   // ---------- Image upload ----------
@@ -347,32 +361,27 @@
     var key=$("sectionImageTarget").value;
     var file=$("sectionImgFile").files[0];
     if(!file){ banner("uploadBanner","Choose an image first.","err"); return; }
-    if(!token){ banner("uploadBanner","Save a token first.","err"); return; }
+    if(!session){ banner("uploadBanner","Log in first.","err"); return; }
     var safe=file.name.replace(/[^\w.\-]/g,"_");
     var path="images/sections/"+key+"-"+Date.now()+"-"+safe;
     banner("uploadBanner","Uploading and attaching image…","info");
     var reader=new FileReader();
     reader.onload=function(){
       var b64=reader.result.split(",")[1];
-      var body={message:"Add "+key+" section image",content:b64,branch:BRANCH};
-      fetch(API+"/contents/"+path,{method:"PUT",headers:ghHeaders(),body:JSON.stringify(body)})
-        .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
+      fetch(API_BASE+"/api/image",{method:"PUT",headers:apiHeaders(),body:JSON.stringify({path:path,base64:b64,message:"Add "+key+" section image"})})
+        .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
         .then(function(res){
-          if(!res.ok) throw new Error((res.d&&res.d.message)||"image upload failed");
+          if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
+          if(!res.ok) throw new Error(res.d.error||"Image upload failed");
           if(!content[key]) content[key]={};
-          if(key==="hero") content[key].photo=path;
-          else content[key].image=path;
-          markDirty();
-          syncRaw();
-          refreshSectionImagePreview();
-          banner("uploadBanner","✓ Image uploaded and attached to "+sectionLabels[key]+". Click Save & Publish below to update the site.","ok");
+          if(key==="hero") content[key].photo=path; else content[key].image=path;
+          markDirty(); syncRaw(); refreshSectionImagePreview();
+          banner("uploadBanner","✓ Image uploaded and attached. Click Save & Publish below.","ok");
           $("sectionImgFile").value="";
-        })
-        .catch(function(e){banner("uploadBanner","Upload failed: "+e.message,"err");});
+        }).catch(function(e){banner("uploadBanner","Upload failed: "+e.message,"err");});
     };
     reader.readAsDataURL(file);
   }
-
   function clearSectionImage(){
     var key=$("sectionImageTarget").value;
     if(!content || !content[key]) return;
@@ -385,8 +394,8 @@
   }
 
   // ---------- Events ----------
-  $("saveTokenBtn").onclick=function(){ token=$("token").value.trim(); localStorage.setItem("gh_admin_token",token); loadContent(); };
-  $("clearTokenBtn").onclick=function(){ token=""; localStorage.removeItem("gh_admin_token"); $("token").value=""; banner("authBanner","Token cleared.","info"); };
+  $("loginBtn").onclick=login;
+  $("logoutBtn").onclick=function(){session="";sessionStorage.removeItem("admin_session");$("editorArea").style.display="none";$("footerbar").style.display="none";banner("authBanner","Logged out.","info");};
   $("reloadBtn").onclick=loadContent;
   $("saveBtn").onclick=save;
   $("uploadBtn").onclick=uploadImage;
@@ -396,7 +405,7 @@
   $("applyRawBtn").onclick=function(){ try{ content=JSON.parse($("raw").value); markDirty(); buildEditor(); banner("saveBanner","Raw JSON applied to forms (not yet saved).","info"); }catch(e){ banner("saveBanner","Invalid JSON: "+e.message,"err"); } };
   window.addEventListener("beforeunload",function(e){ if(dirty){ e.preventDefault(); e.returnValue=""; } });
 
-  if(token) loadContent();
+  if(session) loadContent();
 })();
 </script>
 </body>
