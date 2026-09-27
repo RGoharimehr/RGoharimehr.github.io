@@ -683,17 +683,46 @@
     color: #b8c4d6;
     background: rgba(255,255,255,0.025);
   }
+  #skills{
+    position:relative;
+    isolation:isolate;
+  }
+  #skills::before{
+    content:"";
+    position:absolute;
+    inset:28px 0;
+    z-index:-1;
+    background:rgba(8,13,21,0.72);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:18px;
+    box-shadow:0 18px 55px rgba(0,0,0,0.22);
+  }
   #skills .about-grid{
     opacity:1 !important;
     transform:none !important;
   }
+  #skills .about-grid > div{
+    position:relative;
+    z-index:1;
+  }
   .skills-label{
     font-size:0.95rem;
-    margin-bottom:12px;
-    color: #aebbd0;
+    margin-bottom:14px;
+    color:#d9e3ef !important;
     text-transform:uppercase;
     letter-spacing:1px;
-    font-weight:600;
+    font-weight:700;
+  }
+  #skills .tag-pill{
+    color:#d1dbe7 !important;
+    border-color:rgba(148,163,184,0.28);
+    background:rgba(18,27,40,0.82);
+    text-shadow:0 1px 8px rgba(0,0,0,0.35);
+  }
+  #skills .tag-pill:hover{
+    color:#ffffff !important;
+    border-color:rgba(56,189,248,0.55);
+    background:rgba(25,39,56,0.95);
   }
 
   /* Tools */
