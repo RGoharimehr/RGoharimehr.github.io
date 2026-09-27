@@ -334,7 +334,7 @@
     var key = $("sectionImageTarget").value;
     var box = $("sectionImagePreview");
     box.innerHTML = "";
-    var path = content && content[key] && content[key].image;
+    var path = content && content[key] && (key==="hero" ? content[key].photo : content[key].image);
     if(path){
       var img=document.createElement("img");
       img.src=path + (path.indexOf("?")===-1 ? "?v="+Date.now() : "");
@@ -360,7 +360,8 @@
         .then(function(res){
           if(!res.ok) throw new Error((res.d&&res.d.message)||"image upload failed");
           if(!content[key]) content[key]={};
-          content[key].image=path;
+          if(key==="hero") content[key].photo=path;
+          else content[key].image=path;
           markDirty();
           syncRaw();
           refreshSectionImagePreview();
@@ -375,7 +376,8 @@
   function clearSectionImage(){
     var key=$("sectionImageTarget").value;
     if(!content || !content[key]) return;
-    content[key].image="";
+    if(key==="hero") content[key].photo="";
+    else content[key].image="";
     markDirty();
     syncRaw();
     refreshSectionImagePreview();
