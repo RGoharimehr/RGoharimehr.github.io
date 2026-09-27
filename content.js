@@ -26,6 +26,21 @@
     setText(sectionSel + " .section-head .tag", tag);
     setText(sectionSel + " .section-head h2", title);
   }
+  function renderSectionImage(sectionId, data) {
+    var section = q(sectionId);
+    if (!section || !data || !data.image) return;
+    var existing = q(".section-image", section);
+    if (existing) existing.remove();
+    var wrap = el("div", "section-image");
+    var img = el("img");
+    img.src = data.image;
+    img.alt = data.title ? data.title + " image" : "Section image";
+    img.loading = "lazy";
+    wrap.appendChild(img);
+    var headEl = q(".section-head", section);
+    if (headEl) headEl.insertAdjacentElement("afterend", wrap);
+  }
+
 
   function render(c) {
     /* ---- Hero ---- */
@@ -46,6 +61,7 @@
     /* ---- About ---- */
     if (c.about) {
       head("#about", c.about.tag, c.about.title);
+      renderSectionImage("#about", c.about);
       var copy = q("#about .about-copy");
       if (copy && c.about.paragraphs) {
         copy.innerHTML = "";
@@ -57,6 +73,7 @@
     /* ---- Research ---- */
     if (c.research) {
       head("#research", c.research.tag, c.research.title);
+      renderSectionImage("#research", c.research);
       var rg = q("#research .research-grid");
       if (rg && c.research.cards) {
         rg.innerHTML = "";
@@ -70,6 +87,7 @@
     /* ---- Skills ---- */
     if (c.skills) {
       head("#skills", c.skills.tag, c.skills.title);
+      renderSectionImage("#skills", c.skills);
       var sg = q("#skills .about-grid");
       if (sg && c.skills.groups) {
         sg.innerHTML = "";
@@ -87,6 +105,7 @@
     /* ---- Publications ---- */
     if (c.publications) {
       head("#publications", c.publications.tag, c.publications.title);
+      renderSectionImage("#publications", c.publications);
       var pl = q("#publications .pub-list");
       if (pl && c.publications.items) {
         pl.innerHTML = "";
@@ -102,6 +121,7 @@
     /* ---- Experience & Education ---- */
     if (c.experience) {
       head("#experience", c.experience.tag, c.experience.title);
+      renderSectionImage("#experience", c.experience);
       var cols = document.querySelectorAll("#experience .exp-grid .timeline");
       function fillTimeline(tl, items) {
         if (!tl || !items) return;
@@ -118,6 +138,7 @@
     /* ---- Projects ---- */
     if (c.projects) {
       head("#projects", c.projects.tag, c.projects.title);
+      renderSectionImage("#projects", c.projects);
       var pg = q("#projects .project-grid");
       if (pg && c.projects.items) {
         pg.innerHTML = "";
@@ -132,6 +153,7 @@
     /* ---- Events (with lightbox) ---- */
     if (c.events) {
       head("#events", c.events.tag, c.events.title);
+      renderSectionImage("#events", c.events);
       var list = q("#events-list");
       if (list && c.events.items) {
         list.innerHTML = "";
@@ -164,6 +186,7 @@
     /* ---- Videos ---- */
     if (c.videos) {
       head("#videos", c.videos.tag, c.videos.title);
+      renderSectionImage("#videos", c.videos);
       var vg = q("#videos .video-grid");
       if (vg && c.videos.items) {
         vg.innerHTML = "";
@@ -178,6 +201,7 @@
     /* ---- Tools ---- */
     if (c.tools) {
       head("#tools", c.tools.tag, c.tools.title);
+      renderSectionImage("#tools", c.tools);
       var tg = q("#tools .tool-grid");
       if (tg && c.tools.items) {
         tg.innerHTML = "";
@@ -192,6 +216,7 @@
 
     /* ---- Contact ---- */
     if (c.contact) {
+      renderSectionImage("#contact", c.contact);
       setText("#contact .contact-box h2", c.contact.title);
       setText("#contact .contact-box p", c.contact.text);
       var cl = q("#contact .contact-links");
