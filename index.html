@@ -676,16 +676,21 @@
   .project-body p{ color: var(--text-dim); font-size:0.88rem; margin-bottom:14px; }
   .tags{ display:flex; gap:8px; flex-wrap:wrap; }
   .tag-pill{
-    font-size:0.72rem;
+    font-size:0.76rem;
     padding:4px 10px;
     border-radius:999px;
     border:1px solid var(--border);
-    color: var(--text-dim);
+    color: #b8c4d6;
+    background: rgba(255,255,255,0.025);
+  }
+  #skills .about-grid{
+    opacity:1 !important;
+    transform:none !important;
   }
   .skills-label{
     font-size:0.95rem;
     margin-bottom:12px;
-    color: var(--text-dim);
+    color: #aebbd0;
     text-transform:uppercase;
     letter-spacing:1px;
     font-weight:600;
@@ -1336,7 +1341,7 @@
     // --- Scroll reveal ---
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if('IntersectionObserver' in window && !reduce){
-      var sel = '.section-head, .research-card, .project-card, .event-block, .pub-item, .tl-item, .tool-card, .video-card, .contact-box, #skills .about-grid';
+      var sel = '.section-head, .research-card, .project-card, .event-block, .pub-item, .tl-item, .tool-card, .video-card, .contact-box';
       var ro = new IntersectionObserver(function(entries, obs){
         entries.forEach(function(e){
           if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
