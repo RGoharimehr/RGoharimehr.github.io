@@ -18,7 +18,8 @@
       "I'm a Ph.D. student in Mechanical Engineering at Villanova University, working in the Laboratory for Advanced Thermal and Fluid Systems. My research focuses on Flow Network Modeling, thermal-fluid system analysis, experimental validation, and Digital Twin development for large-scale, high-power data center cooling systems.",
       "My current work spans two-phase cooling component modeling in Flownex, system-level integration of vendor hardware and experimental data, and interactive Digital Twin development in NVIDIA Omniverse."
     ],
-    "badge": "OMNICOOL Digital Twin · live simulation"
+    "badge": "OMNICOOL Digital Twin · live simulation",
+    "image": ""
   },
   "research": {
     "tag": "Focus areas",
@@ -54,7 +55,8 @@
         "title": "System Integration",
         "text": "Integration of equipment specifications, performance curves, CAD information, and experimental data into system models."
       }
-    ]
+    ],
+    "image": ""
   },
   "skills": {
     "tag": "Toolbox",
@@ -116,7 +118,8 @@
           "C#"
         ]
       }
-    ]
+    ],
+    "image": ""
   },
   "publications": {
     "tag": "Selected work",
@@ -153,7 +156,8 @@
         "title": "Effect of multiphase lattice Boltzmann collision models with single- and multi-relaxation times for simulation of liquid-vapor two-phase flows",
         "authors": "<strong>R. Goharimehr</strong> — Mechanical Engineering Sharif, 363(1), 77–88."
       }
-    ]
+    ],
+    "image": ""
   },
   "experience": {
     "tag": "Career",
@@ -186,7 +190,8 @@
         "title": "B.S., Mechanical Engineering",
         "text": "Final project: simulation of fluid flow around a circular obstacle at various Reynolds numbers using Ansys CFX."
       }
-    ]
+    ],
+    "image": ""
   },
   "projects": {
     "tag": "Selected work",
@@ -241,7 +246,8 @@
           "3D Visualization"
         ]
       }
-    ]
+    ],
+    "image": ""
   },
   "events": {
     "tag": "On the road",
@@ -271,7 +277,8 @@
         "meta": "2026 · Live 250 kW two-phase cooling POD demonstration with a scaling path to 1 MW+.",
         "photos": []
       }
-    ]
+    ],
+    "image": ""
   },
   "videos": {
     "tag": "Watch",
@@ -282,7 +289,8 @@
         "title": "OMNICOOL Digital Twin Demo",
         "desc": "Walkthrough of the NVIDIA Omniverse Digital Twin for the OMNICOOL two-phase data center cooling system — coupling Flow Network Modeling with CFD, live telemetry, and interactive control."
       }
-    ]
+    ],
+    "image": ""
   },
   "tools": {
     "tag": "Build",
@@ -309,7 +317,8 @@
         "status": "Coming soon",
         "href": "tools/unit-converter.html"
       }
-    ]
+    ],
+    "image": ""
   },
   "contact": {
     "title": "Let's work together",
@@ -332,7 +341,8 @@
         "label": "GitHub",
         "href": "https://github.com/RGoharimehr/"
       }
-    ]
+    ],
+    "image": ""
   },
   "footer": "© 2026 Reza Goharimehr. Built with curiosity for thermal science and engineering."
 }
