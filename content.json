@@ -3,7 +3,7 @@
     "eyebrow": "Villanova University · Laboratory for Advanced Thermal and Fluid Systems",
     "name": "Reza Goharimehr",
     "titleAccent": "Thermal Scientist & Engineer",
-    "lead": "I develop Flow Network Models and Digital Twins for large-scale data center liquid cooling systems — working with NVIDIA, Vertiv, and Villanova University on the ARPA-E OMNICOOL project to model single- and two-phase direct-to-chip cooling for high-power GPU racks.",
+    "lead": "I develop Flow Network Models and physics-based Digital Twins for large-scale data center cooling systems, with current work focused on two-phase direct-to-chip cooling, system integration, experimental validation, and thermal-hydraulic modeling.",
     "primaryBtnText": "View my work",
     "primaryBtnHref": "#projects",
     "cvBtnText": "Download CV",
@@ -15,8 +15,8 @@
     "tag": "Who I am",
     "title": "About Me",
     "paragraphs": [
-      "I'm a graduate researcher in the Department of Mechanical Engineering at Villanova University, working under Dr. Alfonso Ortega in the Laboratory for Advanced Thermal and Fluid Systems. My research focuses on Flow Network Modeling (FNM) and Digital Twin development for large-scale, high-power data center cooling systems.",
-      "I lead the development of a two-phase component library (cold-plates, quick disconnects, flow regulators, heat exchangers) in the Flownex Simulation Environment, and integrate these models into an interactive Digital Twin built on NVIDIA Omniverse — connecting physics-based simulation, live telemetry, and even XR control via Apple Vision Pro."
+      "I'm a Ph.D. student in Mechanical Engineering at Villanova University, working in the Laboratory for Advanced Thermal and Fluid Systems. My research focuses on Flow Network Modeling, thermal-fluid system analysis, experimental validation, and Digital Twin development for large-scale, high-power data center cooling systems.",
+      "My current work spans two-phase cooling component modeling in Flownex, system-level integration of vendor hardware and experimental data, and interactive Digital Twin development in NVIDIA Omniverse."
     ],
     "badge": "OMNICOOL Digital Twin · live simulation"
   },
@@ -25,34 +25,34 @@
     "title": "Research Interests",
     "cards": [
       {
-        "icon": "🔥",
-        "title": "Heat & Mass Transfer",
-        "text": "Conduction, convection, and radiation modeling in complex geometries and multiphase systems."
-      },
-      {
         "icon": "🌀",
-        "title": "Computational Fluid Dynamics",
-        "text": "High-fidelity CFD simulation, mesh convergence studies, and parametric design-of-experiments."
+        "title": "Flow Network Modeling",
+        "text": "System-level thermal-hydraulic modeling of large-scale cooling loops, components, and operating conditions."
       },
       {
-        "icon": "⚙️",
-        "title": "Thermal-Fluid Systems",
-        "text": "System-level thermal management for energy, propulsion, and electronics applications."
+        "icon": "❄️",
+        "title": "Two-Phase Cooling",
+        "text": "Direct-to-chip two-phase cooling, boiling heat transfer, pressure-drop analysis, and component characterization."
       },
       {
-        "icon": "📊",
-        "title": "Data-Driven Modeling",
-        "text": "Reduced-order and surrogate models built from simulation matrices to accelerate design cycles."
+        "icon": "🔥",
+        "title": "Thermal Management",
+        "text": "Heat transfer and thermal performance analysis for high-density computing and electronics cooling systems."
       },
       {
         "icon": "🧪",
         "title": "Experimental Validation",
-        "text": "Bench and lab-scale testing to validate and calibrate computational thermal models."
+        "text": "Thermal-fluid test benches, instrumentation, data acquisition, and model-to-test correlation."
       },
       {
-        "icon": "🛠️",
-        "title": "Design Optimization",
-        "text": "Coupling simulation with optimization workflows to improve thermal efficiency and reliability."
+        "icon": "🌐",
+        "title": "Digital Twins",
+        "text": "Physics-based Digital Twins coupling system simulation, telemetry, controls, and 3D visualization."
+      },
+      {
+        "icon": "⚙️",
+        "title": "System Integration",
+        "text": "Integration of equipment specifications, performance curves, CAD information, and experimental data into system models."
       }
     ]
   },
@@ -61,25 +61,58 @@
     "title": "Skills & Software",
     "groups": [
       {
-        "label": "Simulation & Analysis",
+        "label": "Thermal & Hardware Engineering",
         "items": [
-          "Ansys Fluent (Expert)",
-          "Ansys CFX (Expert)",
-          "Ansys Workbench (Expert)",
+          "Thermal management",
+          "Heat transfer",
+          "Fluid flow",
+          "Two-phase cooling",
+          "Data center cooling systems",
+          "Thermal-hydraulic system analysis",
+          "Component characterization",
+          "Heat-exchanger analysis",
+          "Cooling-loop design"
+        ]
+      },
+      {
+        "label": "CFD & Numerical Modeling",
+        "items": [
+          "Computational Fluid Dynamics",
+          "Flow Network Modeling",
+          "Multiphase flow",
+          "Numerical validation",
+          "Mesh convergence studies",
+          "Lattice Boltzmann methods",
+          "Surrogate modeling",
+          "Design optimization"
+        ]
+      },
+      {
+        "label": "Experimental & Laboratory Testing",
+        "items": [
+          "Thermal-fluid testing",
+          "Flow-loop design and construction",
+          "Sensor installation and wiring",
+          "Instrumentation",
+          "Temperature and pressure measurement",
+          "Flow measurement",
+          "Data acquisition",
+          "Model-to-test correlation"
+        ]
+      },
+      {
+        "label": "Software & Programming",
+        "items": [
+          "Ansys Fluent",
+          "Ansys CFX",
+          "Ansys Workbench",
           "Flownex SE",
           "NVIDIA Omniverse",
           "Tecplot",
           "ParaView",
-          "nTop"
-        ]
-      },
-      {
-        "label": "Programming",
-        "items": [
-          "FORTRAN (Expert)",
-          "MATLAB",
           "Python",
-          "C++",
+          "MATLAB",
+          "FORTRAN",
           "C#"
         ]
       }
@@ -93,17 +126,12 @@
       {
         "year": "2026",
         "title": "Development of a Flow Network Modeling Approach for End-to-End Data Center Direct-to-Chip Two-Phase Cooling Systems",
-        "authors": "A. Heydari, <strong>R. Goharimehr*</strong>, A. Ortega, M. Mehrabikermani, Y. Manaserh, V. Britz, M. Venter — 42nd Semiconductor Thermal Measurement, Modeling & Management Symposium (SEMI-THERM), San Jose, CA. (*Corresponding author)"
+        "authors": "A. Heydari, <strong>R. Goharimehr</strong>, A. Ortega, M. Mehrabikermani, Y. Manaserh, V. Britz, M. Venter — SEMI-THERM."
       },
       {
         "year": "2024",
         "title": "Studying a droplet impaction on a vibrating porous medium",
         "authors": "E. Ezzatneshan, R. Sadraei, <strong>R. Goharimehr</strong> — Engineering Applications of Computational Fluid Mechanics, 18(1), 2410360."
-      },
-      {
-        "year": "2023",
-        "title": "Seeing new depths: visualizing the three-dimensional flow field of a free-swimming alga",
-        "authors": "G. Pradipta, V. Tran, <strong>R. Goharimehr</strong>, J. Hong, X. Yong, X. Cheng — Bulletin of the American Physical Society (APS)."
       },
       {
         "year": "2021",
@@ -123,7 +151,7 @@
       {
         "year": "2020",
         "title": "Effect of multiphase lattice Boltzmann collision models with single- and multi-relaxation times for simulation of liquid-vapor two-phase flows",
-        "authors": "<strong>R. Goharimehr</strong> — Mechanical Engineering Sharif, 363(1), 77–88 (in Persian)."
+        "authors": "<strong>R. Goharimehr</strong> — Mechanical Engineering Sharif, 363(1), 77–88."
       }
     ]
   },
@@ -133,34 +161,29 @@
     "jobs": [
       {
         "meta": "Jan 2024 — Present",
-        "title": "Ph.D. Researcher, Mechanical Engineering · Villanova University",
-        "text": "Research Assistant in the Laboratory for Advanced Thermal and Fluid Systems, advised by Dr. Alfonso Ortega. Leading development of Digital Twins of large-scale data center liquid cooling systems (ES2 Project 5.1) and Flow Network Models for the ARPA-E OMNICOOL project with NVIDIA and Vertiv, Boyd and Binghamton University."
+        "title": "Ph.D. Student Research Assistant · Villanova University",
+        "text": "Laboratory for Advanced Thermal and Fluid Systems. Conduct thermal-fluid modeling, system integration, experimental validation, and engineering analysis for large-scale data center cooling systems; work directly with academic and industry partners on component development and system-level simulation."
       },
       {
-        "meta": "Aug 2022 — Dec 2023",
-        "title": "Ph.D. Student & Teaching/Research Assistant · Binghamton University, SUNY",
-        "text": "Thomas J. Watson College of Engineering and Applied Science, Department of Mechanical Engineering. "
+        "meta": "Sep 2022 — Jan 2024",
+        "title": "Teaching Assistant · Binghamton University",
+        "text": "Thomas J. Watson College of Engineering and Applied Science. Provided instructional and laboratory support for engineering courses, including technical materials, student assistance, and computational or laboratory instruction."
       },
       {
         "meta": "Jun 2018 — Aug 2022",
         "title": "Research Assistant · Multiphase Flow Laboratory, Shahid Beheshti University",
-        "text": "Mentored undergraduate students through the research process on multiphase and multicomponent lattice Boltzmann simulation."
-      },
-      {
-        "meta": "Sep 2017 — Jun 2018",
-        "title": "Teaching Assistant · Shahid Beheshti University",
-        "text": "New Technologies Engineering Department. Taught the graduate course \"Advanced Numerical Computation Methods\" (~25 students/semester), including FORTRAN, Tecplot, and MATLAB instruction; designed lesson plans and course materials."
+        "text": "Developed numerical models for multiphase and multicomponent flow using lattice Boltzmann methods, investigating fluid transport, interfacial dynamics, wettability, and flow through porous media."
       }
     ],
     "education": [
       {
         "meta": "Sep 2016 — Sep 2019",
-        "title": "M.S., Aerospace Engineering · Shahid Beheshti University (SBU)",
-        "text": "Dissertation: \"Numerical Simulation of Multicomponent Multiphase Flow Transport through a Porous Media Using the Lattice Boltzmann Method,\" advised by Dr. E. Ezzatneshan."
+        "title": "M.S., Mechanical Engineering",
+        "text": "Dissertation: “Numerical Simulation of Multicomponent Multiphase Flow Transport through Porous Media via Lattice Boltzmann Method.”"
       },
       {
         "meta": "Sep 2011 — Nov 2015",
-        "title": "B.S., Mechanical Engineering · Islamic Azad University (IAUN)",
+        "title": "B.S., Mechanical Engineering",
         "text": "Final project: simulation of fluid flow around a circular obstacle at various Reynolds numbers using Ansys CFX."
       }
     ]
@@ -170,40 +193,52 @@
     "title": "Projects",
     "items": [
       {
-        "title": "OMNICOOL — Two-Phase Cooling POD (ARPA-E)",
-        "text": "A 250 kW self-contained, containerized POD with a clear scaling path to 1 MW+, demonstrated live at the ARPA-E Energy Innovation Summit. End-to-end two-phase pumped refrigeration achieves ~0.005°C/W package thermal resistance, PUE below 1.05, and zero water consumption at ~40°C ambient. Built with Vertiv, Boyd (Eaton), Binghamton University, and Villanova University, integrated with a physics-based NVIDIA Omniverse Digital Twin.",
+        "title": "OMNICOOL — 1 MW-Class Two-Phase Data Center Cooling System (ARPA-E)",
+        "text": "Developing system-level thermal-hydraulic models for a 1 MW-class two-phase direct-to-chip data center cooling system, with current work focused on a 250 kW unit. Integrating vendor hardware information, equipment performance data, experimental measurements, and system requirements into physics-based Flow Network Models.",
         "tags": [
           "ARPA-E",
-          "Two-Phase Refrigeration",
-          "NVIDIA Omniverse",
-          "Digital Twin"
+          "Two-Phase Cooling",
+          "Flow Network Modeling",
+          "System Integration"
         ]
       },
       {
-        "title": "FASCOLOR — Real-Time False-Color Visualization (Omniverse)",
-        "text": "An NVIDIA Omniverse Kit extension that maps live simulation results — velocity, temperature, pressure, and vapor quality — onto USD scene geometry as real-time false-color (colormap) fields. Built for the OMNICOOL Digital Twin, it streams Flow Network Modeling and CFD outputs onto the 3D data-center model with adjustable colormaps and scalar ranges for interactive results visualization.",
+        "title": "ES2 Project 5.1 — Single-Phase vs. Two-Phase Data Center Cooling",
+        "text": "Performed comparative thermal-fluid simulations of single-phase and two-phase data center cooling architectures to evaluate thermal response, cooling performance, flow behavior, and system-level operating characteristics under varying heat loads.",
         "tags": [
-          "NVIDIA Omniverse",
-          "USD",
-          "Visualization",
-          "Digital Twin"
+          "ES2",
+          "Thermal-Fluid Systems",
+          "System Comparison"
         ]
       },
       {
-        "title": "Two-Phase Data Center Component Library",
-        "text": "Cold-plates, quick disconnects, flow regulators, and two-phase heat exchangers developed in the Flownex Simulation Environment and validated against experimental test data (e.g. Kandlikar two-phase cold-plate model).",
+        "title": "Two-Phase Data Center Component Library — Flownex",
+        "text": "Developed a dedicated two-phase data center cooling component library in the Flownex Simulation Environment, including cold plates, quick disconnects, flow regulators, and heat exchangers. Developed and validated component models using experimental data and established two-phase heat-transfer and pressure-drop correlations.",
         "tags": [
           "Flownex",
           "Two-Phase Cooling",
+          "Component Modeling",
           "Validation"
         ]
       },
       {
-        "title": "Single-Phase vs. Two-Phase Cooling Comparison",
-        "text": "",
+        "title": "Thermal-Fluid Experimental Test Bench",
+        "text": "Designed and constructed a thermal-fluid experimental bench for testing and characterization of cold-plate geometries, including skived-fin, porous-foam, and gyroid structures. Performed flow-loop assembly, sensor installation and wiring, instrumentation, measurement-system setup, and data acquisition.",
         "tags": [
-          "Transient Simulation",
-          "System Comparison"
+          "Experimental Testing",
+          "Cold Plates",
+          "Instrumentation",
+          "Validation"
+        ]
+      },
+      {
+        "title": "Digital Twin — NVIDIA Omniverse",
+        "text": "Developed a physics-based Digital Twin architecture coupling thermal-fluid system simulation with telemetry, parametric controls, and 3D visualization for monitoring and analysis of data center cooling systems.",
+        "tags": [
+          "NVIDIA Omniverse",
+          "Digital Twin",
+          "Telemetry",
+          "3D Visualization"
         ]
       }
     ]
@@ -278,7 +313,7 @@
   },
   "contact": {
     "title": "Let's work together",
-    "text": "Open to research collaboration, consulting, and engineering roles in thermal-fluid sciences.",
+    "text": "Open to research collaboration and engineering opportunities in thermal-fluid systems, data center cooling, Flow Network Modeling, experimental validation, and Digital Twins.",
     "email": "rgoharim@villanova.edu",
     "links": [
       {
