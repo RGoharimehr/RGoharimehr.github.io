@@ -38,7 +38,13 @@
     img.loading = "lazy";
     wrap.appendChild(img);
     var headEl = q(".section-head", section);
-    if (headEl) headEl.insertAdjacentElement("afterend", wrap);
+    if (sectionId === "#about") {
+      var aboutInner = q(".about-inner", section);
+      if (aboutInner && headEl) headEl.insertAdjacentElement("afterend", wrap);
+      else if (headEl) headEl.insertAdjacentElement("afterend", wrap);
+    } else if (headEl) {
+      headEl.insertAdjacentElement("afterend", wrap);
+    }
   }
 
 
