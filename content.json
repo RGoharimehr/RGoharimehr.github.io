@@ -6,8 +6,8 @@
     "lead": "I develop Flow Network Models and physics-based Digital Twins for large-scale data center cooling systems, with current work focused on two-phase direct-to-chip cooling, system integration, experimental validation, and thermal-hydraulic modeling.",
     "primaryBtnText": "View my work",
     "primaryBtnHref": "#projects",
-    "cvBtnText": "Download CV",
-    "cvBtnHref": "Reza-Goharimehr-CV.pdf",
+    "cvBtnText": "View / Download CV",
+    "cvBtnHref": "Reza-Goharimehr-CV.html",
     "photo": "images/reza-goharimehr.png",
     "photoCaption": "Villanova University · Mechanical Engineering"
   },
