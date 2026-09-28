@@ -90,12 +90,12 @@
   <!-- Auth -->
   <fieldset>
     <legend>Admin Login</legend>
-    <p class="muted">Enter your website admin password. GitHub credentials stay on the server and are never exposed to this page.</p>
+    <p class="muted">Enter your GitHub Personal Access Token. The token is stored only in this browser session and is used to edit this repository.</p>
     <div class="field">
-      <label>Admin password</label>
+      <label>GitHub Personal Access Token</label>
       <div class="row">
-        <input type="password" id="password" placeholder="Enter password" style="flex:1; min-width:240px;">
-        <button id="loginBtn" class="primary">Login</button>
+        <input type="password" id="token" placeholder="github_pat_..." style="flex:1; min-width:240px;">
+        <button id="loginBtn" class="primary">Connect</button>
         <button id="logoutBtn">Logout</button>
       </div>
     </div>
@@ -174,13 +174,14 @@
 
 <script>
 (function(){
-  var API_BASE = "https://YOUR-RENDER-ADMIN-API.onrender.com";
-  var session = sessionStorage.getItem("admin_session") || "";
+  var API = "https://api.github.com/repos/RGoharimehr/RGoharimehr.github.io";
+  var BRANCH = "main";
+  var token = sessionStorage.getItem("gh_admin_token") || "";
   var content=null, sha=null, dirty=false;
 
   var $=function(id){return document.getElementById(id);};
   $("repoLabel").textContent = "Secure admin mode";
-  if(session) loadContent();
+  if(token) loadContent();
 
   function banner(id, msg, kind){ var b=$(id); b.textContent=msg; b.className="banner show "+(kind||"info"); }
   function hide(id){ $(id).className="banner"; }
@@ -191,33 +192,32 @@
   function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
   function b64decodeUtf8(b64){ return decodeURIComponent(escape(atob(b64.replace(/\n/g,"")))); }
 
-  function apiHeaders(){ return { "Content-Type":"application/json", "X-Admin-Session":session }; }
+  function ghHeaders(){ return { "Accept":"application/vnd.github+json", "Authorization":"Bearer "+token, "X-GitHub-Api-Version":"2022-11-28" }; }
 
   function login(){
-    var password=$("password").value;
-    if(!password){ banner("authBanner","Enter your password.","err"); return; }
-    banner("authBanner","Signing in…","info");
-    fetch(API_BASE+"/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:password})})
+    token=$("token").value.trim();
+    if(!token){ banner("authBanner","Enter your GitHub token.","err"); return; }
+    banner("authBanner","Connecting to GitHub…","info");
+    fetch(API,{headers:ghHeaders()})
       .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
       .then(function(res){
-        if(!res.ok) throw new Error(res.d.error||"Login failed");
-        session=res.d.session;
-        sessionStorage.setItem("admin_session",session);
-        $("password").value="";
+        if(!res.ok) throw new Error(res.d.message||"GitHub authentication failed");
+        sessionStorage.setItem("gh_admin_token",token);
+        $("token").value="";
         loadContent();
-      }).catch(function(e){banner("authBanner",e.message,"err");});
+      }).catch(function(e){token="";sessionStorage.removeItem("gh_admin_token");banner("authBanner",e.message,"err");});
   }
 
   function loadContent(){
-    if(!session){ banner("authBanner","Enter the admin password.","info"); return; }
-    banner("authBanner","Loading website content…","info");
-    fetch(API_BASE+"/api/content",{headers:apiHeaders(),cache:"no-store"})
+    if(!token){ banner("authBanner","Enter your GitHub token.","info"); return; }
+    banner("authBanner","Loading website content from GitHub…","info");
+    fetch(API+"/contents/content.json?ref="+BRANCH,{headers:ghHeaders(),cache:"no-store"})
       .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
       .then(function(res){
-        if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
-        if(!res.ok) throw new Error(res.d.error||"Unable to load content");
-        sha=res.d.sha; content=res.d.content;
-        banner("authBanner","✓ Logged in. Content loaded.","ok");
+        if(res.status===401){token="";sessionStorage.removeItem("gh_admin_token");throw new Error("GitHub token is invalid or expired.");}
+        if(!res.ok) throw new Error(res.d.message||"Unable to load content");
+        sha=res.d.sha; content=JSON.parse(b64decodeUtf8(res.d.content));
+        banner("authBanner","✓ Connected. Content loaded.","ok");
         $("editorArea").style.display="block"; $("footerbar").style.display="flex"; $("saveBanner2").style.display="block";
         buildEditor(); $("raw").value=JSON.stringify(content,null,2); refreshSectionImagePreview(); markClean();
       }).catch(function(e){ banner("authBanner",e.message,"err"); });
@@ -300,14 +300,15 @@
   function save(){
     if(!content){ return; }
     banner("saveBanner","Saving to website…","info");
-    var body={message:($("commitMsg").value.trim()||"Update content via admin"),content:content};
-    fetch(API_BASE+"/api/content",{method:"PUT",headers:apiHeaders(),body:JSON.stringify(body)})
+    var encoded=b64encode(JSON.stringify(content,null,2));
+    var body={message:($("commitMsg").value.trim()||"Update content via admin"),content:encoded,branch:BRANCH,sha:sha};
+    fetch(API+"/contents/content.json",{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ghHeaders()),body:JSON.stringify(body)})
       .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
       .then(function(res){
-        if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
-        if(!res.ok) throw new Error(res.d.error||"Save failed");
-        sha=res.sha||sha; markClean();
-        banner("saveBanner","✓ Saved. GitHub Pages will update shortly.","ok");
+        if(res.status===401){token="";sessionStorage.removeItem("gh_admin_token");throw new Error("GitHub token is invalid or expired.");}
+        if(!res.ok) throw new Error(res.d.message||"Save failed");
+        sha=res.d.content && res.d.content.sha ? res.d.content.sha : sha; markClean();
+        banner("saveBanner","✓ Saved to GitHub. The live site will update shortly.","ok");
         $("commitMsg").value="";
       }).catch(function(e){banner("saveBanner","Save failed: "+e.message,"err");});
   }
@@ -316,22 +317,22 @@
   function uploadImage(){
     var file=$("imgFile").files[0];
     if(!file){ banner("uploadBanner","Choose an image first.","err"); return; }
-    if(!token){ banner("uploadBanner","Save a token first.","err"); return; }
-    var path="images/events/"+file.name.replace(/[^\w.\-]/g,"_");
+    if(!token){ banner("uploadBanner","Connect to GitHub first.","err"); return; }
+    var path="images/events/"+file.name.replace(/[^\\w.\\-]/g,"_");
     banner("uploadBanner","Uploading "+path+" …","info");
     var reader=new FileReader();
     reader.onload=function(){
       var b64=reader.result.split(",")[1];
-      // check if it already exists to get sha
-      fetch(API+"/contents/"+path+"?ref="+BRANCH,{headers:ghHeaders()}).then(function(r){ return r.ok?r.json():null; })
+      fetch(API+"/contents/"+path+"?ref="+BRANCH,{headers:ghHeaders()})
+        .then(function(r){ return r.ok?r.json():null; })
         .then(function(existing){
-          var body={ message:"Upload "+path, content:b64, branch:BRANCH };
+          var body={message:"Upload "+path,content:b64,branch:BRANCH};
           if(existing&&existing.sha) body.sha=existing.sha;
-          return fetch(API+"/contents/"+path,{method:"PUT",headers:ghHeaders(),body:JSON.stringify(body)});
+          return fetch(API+"/contents/"+path,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ghHeaders()),body:JSON.stringify(body)});
         })
         .then(function(r){ return r.json().then(function(d){return {ok:r.ok,d:d};}); })
-        .then(function(res){ if(!res.ok) throw new Error((res.d&&res.d.message)||"upload failed");
-          banner("uploadBanner","✓ Uploaded. Use this path as a photo src:  "+path,"ok"); })
+        .then(function(res){ if(!res.ok) throw new Error((res.d&&res.d.message)||"Upload failed");
+          banner("uploadBanner","✓ Uploaded: "+path,"ok"); })
         .catch(function(e){ banner("uploadBanner","Upload failed: "+e.message,"err"); });
     };
     reader.readAsDataURL(file);
@@ -368,11 +369,11 @@
     var reader=new FileReader();
     reader.onload=function(){
       var b64=reader.result.split(",")[1];
-      fetch(API_BASE+"/api/image",{method:"PUT",headers:apiHeaders(),body:JSON.stringify({path:path,base64:b64,message:"Add "+key+" section image"})})
+      fetch(API+"/contents/"+path,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},ghHeaders()),body:JSON.stringify({path:path,content:b64,message:"Add "+key+" section image",branch:BRANCH})})
         .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d};});})
         .then(function(res){
-          if(res.status===401){session="";sessionStorage.removeItem("admin_session");throw new Error("Session expired. Please log in again.");}
-          if(!res.ok) throw new Error(res.d.error||"Image upload failed");
+          if(res.status===401){token="";sessionStorage.removeItem("gh_admin_token");throw new Error("GitHub token is invalid or expired.");}
+          if(!res.ok) throw new Error(res.d.message||"Image upload failed");
           if(!content[key]) content[key]={};
           if(key==="hero") content[key].photo=path; else content[key].image=path;
           markDirty(); syncRaw(); refreshSectionImagePreview();
@@ -395,7 +396,7 @@
 
   // ---------- Events ----------
   $("loginBtn").onclick=login;
-  $("logoutBtn").onclick=function(){session="";sessionStorage.removeItem("admin_session");$("editorArea").style.display="none";$("footerbar").style.display="none";banner("authBanner","Logged out.","info");};
+  $("logoutBtn").onclick=function(){token="";sessionStorage.removeItem("gh_admin_token");$("editorArea").style.display="none";$("footerbar").style.display="none";banner("authBanner","Logged out.","info");};
   $("reloadBtn").onclick=loadContent;
   $("saveBtn").onclick=save;
   $("uploadBtn").onclick=uploadImage;
